@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strings in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Strings in Data Structures</h1>
+        <p>A string is a sequence of characters used to represent text.</p>
+    </header>
+
+    <section>
+        <h2><strong>What is a String?</strong></h2>
+        
+        <p>A <strong>string</strong> is a sequence of characters used to represent text in programming. Strings are one of the most fundamental data types and are widely used for text processing, manipulation, and storage.</p>
+    
+        <ul>
+            <li>Strings are typically <strong>immutable</strong> (cannot be changed after creation) in languages like Python, Java, and JavaScript.</li>
+            <li>Common operations include <strong>concatenation, slicing, searching, and formatting.</strong></li>
+            <li>Strings are stored in memory as <strong>arrays of characters</strong> and may be encoded in formats like <strong>ASCII or Unicode (UTF-8, UTF-16)</strong>.</li>
+        </ul>
+    
+        <h3><strong>Example: String Representation</strong></h3>
+        <pre><code>
+    # Python Example
+    string = "Hello, World!"
+    print(string[0])  # Output: 'H'
+    print(string[-1])  # Output: '!'
+    print(string[0:5])  # Output: 'Hello'
+        </code></pre>
+    
+        <img src="/static/images/strings.png" alt="String Representation">
+    
+        <h3><strong>Mutable vs Immutable Strings</strong></h3>
+        <p>In many languages, strings are immutable, meaning modifications create a new string rather than changing the original one.</p>
+    
+        <table border="1">
+            <tr>
+                <th><strong>Feature</strong></th>
+                <th><strong>Mutable Strings</strong></th>
+                <th><strong>Immutable Strings</strong></th>
+            </tr>
+            <tr>
+                <td><strong>Modification</strong></td>
+                <td>Can be modified in place</td>
+                <td>Cannot be changed after creation</td>
+            </tr>
+            <tr>
+                <td><strong>Performance</strong></td>
+                <td>Faster for repeated modifications</td>
+                <td>More efficient for memory management</td>
+            </tr>
+            <tr>
+                <td><strong>Examples</strong></td>
+                <td>Python <code>bytearray</code>, C <code>char[]</code></td>
+                <td>Python <code>str</code>, Java <code>String</code></td>
+            </tr>
+        </table>
+    
+        <h3><strong>Common String Operations</strong></h3>
+        <ul>
+            <li><strong>Concatenation:</strong> Joining two or more strings.</li>
+            <pre><code>
+    s1 = "Hello"
+    s2 = "World"
+    result = s1 + " " + s2  # Output: "Hello World"
+            </code></pre>
+    
+            <li><strong>Slicing:</strong> Extracting a portion of a string.</li>
+            <pre><code>
+    text = "Programming"
+    print(text[0:4])  # Output: "Prog"
+            </code></pre>
+    
+            <li><strong>Searching:</strong> Checking if a substring exists.</li>
+            <pre><code>
+    sentence = "Data Structures and Algorithms"
+    print("Algorithms" in sentence)  # Output: True
+            </code></pre>
+    
+            <li><strong>Replacing:</strong> Modifying part of a string.</li>
+            <pre><code>
+    message = "Good Morning"
+    new_message = message.replace("Morning", "Evening")  
+    print(new_message)  # Output: "Good Evening"
+            </code></pre>
+        </ul>
+    
+        <h3><strong>Use Cases of Strings</strong></h3>
+        <ul>
+            <li><strong>Processing user input</strong> (e.g., form validation, text filtering)</li>
+            <li><strong>Data storage and retrieval</strong> (e.g., database queries, log processing)</li>
+            <li><strong>Natural Language Processing (NLP)</strong> (e.g., chatbots, sentiment analysis)</li>
+            <li><strong>Web development</strong> (e.g., HTML templates, URL manipulation)</li>
+        </ul>
+    </section>
+    
+    <section>
+        <h2><b>String Representation in Memory</b></h2>
+        <p>Strings are stored as an array of characters in memory. In many languages, they are immutable, meaning modifications create a new copy.</p>
+        <ul>
+            <li><b>Python:</b> Strings are stored as objects in memory and reference counting is used for optimization.</li>
+            <li><b>C/C++:</b> Strings are stored as character arrays ending with a null (`\0`) character.</li>
+            <li><b>Java:</b> Strings are stored in a special memory pool called the "String Constant Pool."</li>
+        </ul>
+        <img src="/static/images/string_memory.png" alt="String Memory Representation">
+    </section>
+
+    <section>
+        <h2><b>String Searching Techniques</b></h2>
+        <p>Searching for substrings is a common operation in text processing. The efficiency of searching algorithms is crucial, especially when working with large datasets. Here are some popular methods for substring search:</p>
+        <ul>
+            <li><b>Naive Search:</b>
+                <p>The naive approach simply scans each position in the text to check if the substring matches. For each position in the text, it checks every character in the pattern. This results in an O(n*m) time complexity, where n is the length of the text and m is the length of the pattern. While easy to implement, this method is inefficient for large texts or patterns.</p>
+            </li>
+            <li><b>KMP (Knuth-Morris-Pratt) Algorithm:</b>
+                <p>The KMP algorithm improves upon the naive search by using a <i>prefix table</i> (also called the "partial match" table). It preprocesses the pattern in O(m) time and then searches the text in O(n) time, resulting in an overall time complexity of O(n+m). This optimization skips over re-checking characters that have already been matched, improving efficiency.</p>
+            </li>
+            <li><b>Rabin-Karp Algorithm:</b>
+                <p>The Rabin-Karp algorithm uses hashing to search for patterns. It hashes the substring and compares it with the hash of segments of the text. If the hashes match, a direct comparison is performed. The average time complexity is O(n+m) in the best case (when hash collisions are rare), but the worst-case complexity is O(n*m) due to hash collisions. It's particularly useful when searching for multiple patterns simultaneously.</p>
+            </li>
+            <li><b>Boyer-Moore Algorithm:</b>
+                <p>The Boyer-Moore algorithm is one of the most efficient string search algorithms in practice. It skips unnecessary comparisons by using two heuristics: the <i>bad character rule</i> and the <i>good suffix rule</i>. These rules allow the algorithm to skip sections of the text, making it much faster than the naive approach, with an average time complexity of O(n/m), which is more efficient when the pattern is much shorter than the text.</p>
+            </li>
+        </ul>
+        <pre><code>
+    # Example: Finding a substring in Python
+    text = "hello world"
+    index = text.find("world")
+    print(index)  # Output: 6
+        </code></pre>
+        <p><i>Note:</i> In Python, the `find()` method is used to search for a substring in a string. It returns the index of the first occurrence of the substring, or -1 if the substring is not found. Python internally optimizes substring searches, so for many use cases, it's sufficient to use this method. However, for more advanced searching or pattern matching, algorithms like KMP, Rabin-Karp, or Boyer-Moore are preferable.</p>
+    </section>
+    
+    
+    <section>
+        <h2><b>String Formatting Techniques</b></h2>
+        <p>Properly formatting strings is essential for producing clean, readable output, especially when dealing with user input, logs, or reports. Here are some commonly used methods for string formatting:</p>
+        <ul>
+            <li><b>Using `+` Operator:</b>
+                <p>The simplest form of string concatenation in Python is using the `+` operator. While easy to use, it can become inefficient when dealing with large numbers of strings due to the creation of multiple intermediate string objects.</p>
+                <pre><code>"Hello" + " World"</code></pre>
+            </li>
+            <li><b>Using `.format()`:</b>
+                <p>The `.format()` method provides a more powerful and flexible way to format strings. You can use placeholders within the string (using curly braces `{}`), and then replace them with values passed to the `.format()` function. This method also supports positional and keyword arguments for more complex formatting.</p>
+                <pre><code>"Hello {}".format("World")</code></pre>
+                <p>Advanced usage of `.format()` includes formatting numbers, alignment, and specifying precision, making it more useful than basic concatenation.</p>
+            </li>
+            <li><b>Using f-strings (Python 3.6+):</b>
+                <p>f-strings, introduced in Python 3.6, are the most modern and readable way to format strings. They allow you to embed expressions inside string literals by prefixing the string with `f` and placing expressions inside curly braces `{}`. This method is concise, efficient, and avoids the need for explicit function calls like `.format()`.</p>
+                <pre><code>f"Hello {'World'}</code></pre>
+                <p>f-strings are also the fastest method for string formatting in Python, as they are evaluated at runtime, making them suitable for performance-critical applications.</p>
+            </li>
+            <li><b>Using `%` Formatting:</b>
+                <p>Older string formatting in Python uses the `%` operator, similar to C-style formatting. While it's still supported, it's generally not recommended for new code as it is less flexible than `.format()` and f-strings. It uses placeholders like `%s` for strings, `%d` for integers, and `%f` for floating-point numbers.</p>
+                <pre><code>"Hello %s" % "World"</code></pre>
+            </li>
+        </ul>
+        <pre><code>
+    # Example: Using f-strings
+    name = "Alice"
+    age = 25
+    print(f"My name is {name} and I am {age} years old.")
+        </code></pre>
+        <p><i>Note:</i> f-strings not only improve readability but also allow inline expressions, such as calculations or method calls, to be evaluated directly inside the curly braces.</p>
+    </section>
+    
+    
+    <section>
+        <h2><b>Applications of Strings in Real Life</b></h2>
+        <p>Strings are fundamental in many fields and applications across computer science and technology. Below are some common real-life scenarios where string manipulation and processing are crucial:</p>
+        <ul>
+            <li><b>Natural Language Processing (NLP):</b>
+                <p>Strings are essential for various tasks in Natural Language Processing (NLP), such as text classification, speech recognition, machine translation, and sentiment analysis. In AI chatbots, strings are used to process user input, generate responses, and analyze sentiment. NLP algorithms rely on string matching, tokenization, and language models to understand and generate human language.</p>
+            </li>
+            <li><b>Data Processing:</b>
+                <p>Strings are the building blocks for working with structured data formats like CSV, JSON, and XML. These formats store information as text, and string manipulation is used to read, parse, and convert data between different formats. For example, extracting data from a CSV file or parsing JSON objects requires string operations like splitting, trimming, and replacing.</p>
+            </li>
+            <li><b>Cybersecurity:</b>
+                <p>In cybersecurity, strings are used in encryption algorithms, hashing functions, and secure password storage. Passwords are often stored as hashed strings, and encryption involves converting plaintext into strings of cipher text. Techniques like Base64 encoding, SHA-256 hashing, and AES encryption all rely on efficient string handling to maintain data security.</p>
+            </li>
+            <li><b>Web Development:</b>
+                <p>Web development heavily relies on strings, especially in languages like HTML, CSS, and JavaScript. Strings are used to represent HTML elements, attributes, CSS selectors, and JavaScript code. String manipulation is critical for handling dynamic content, such as user inputs in forms, URL parsing, and data rendering. JavaScript, for example, uses string functions like `.split()`, `.replace()`, and `.trim()` to process and manipulate data for web pages.</p>
+            </li>
+            <li><b>Search Engines:</b>
+                <p>Search engines like Google and Bing use strings to index web pages, parse queries, and rank search results. String matching and text analysis are critical in identifying keywords, analyzing metadata, and processing search queries. Regular expressions and pattern matching are used for tasks like crawling web pages and determining the relevance of content.</p>
+            </li>
+        </ul>
+    </section>
+    
+    
+    <section>
+        <h2><b>Common String Methods (Python)</b></h2>
+        <table border="1">
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><code>upper()</code></td>
+                <td>Converts string to uppercase.</td>
+                <td><code>"hello".upper() → "HELLO"</code></td>
+            </tr>
+            <tr>
+                <td><code>lower()</code></td>
+                <td>Converts string to lowercase.</td>
+                <td><code>"HELLO".lower() → "hello"</code></td>
+            </tr>
+            <tr>
+                <td><code>strip()</code></td>
+                <td>Removes leading/trailing spaces.</td>
+                <td><code>" hello ".strip() → "hello"</code></td>
+            </tr>
+            <tr>
+                <td><code>split()</code></td>
+                <td>Splits string into a list based on a delimiter.</td>
+                <td><code>"a,b,c".split(",") → ['a', 'b', 'c']</code></td>
+            </tr>
+            <tr>
+                <td><code>replace()</code></td>
+                <td>Replaces a substring with another.</td>
+                <td><code>"apple".replace("p", "b") → "abble"</code></td>
+            </tr>
+        </table>
+    </section>
+        
+    <section>
+        <h2><strong>Common String Operations</strong></h2>
+        
+        <table border="1">
+            <tr>
+                <th><strong>Operation</strong></th>
+                <th><strong>Description</strong></th>
+                <th><strong>Example (Python)</strong></th>
+            </tr>
+            <tr>
+                <td><strong>Concatenation</strong></td>
+                <td>Combining two or more strings.</td>
+                <td><code>"Hello" + " World" → "Hello World"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Substring</strong></td>
+                <td>Extracting a portion of a string.</td>
+                <td><code>"Python"[0:4] → "Pyth"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Searching</strong></td>
+                <td>Finding a character or substring.</td>
+                <td><code>"apple".find("p") → 1</code></td>
+            </tr>
+            <tr>
+                <td><strong>Replacing</strong></td>
+                <td>Replacing a part of a string.</td>
+                <td><code>"Hello".replace("H", "J") → "Jello"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Trimming (Stripping)</strong></td>
+                <td>Removing extra spaces from start and end.</td>
+                <td><code>" Hello ".strip() → "Hello"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Changing Case</strong></td>
+                <td>Convert to uppercase or lowercase.</td>
+                <td><code>"Hello".upper() → "HELLO"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Splitting</strong></td>
+                <td>Dividing a string into a list.</td>
+                <td><code>"apple,banana".split(",") → ["apple", "banana"]</code></td>
+            </tr>
+            <tr>
+                <td><strong>Joining</strong></td>
+                <td>Joining elements of a list into a string.</td>
+                <td><code>' '.join(["Hello", "World"]) → "Hello World"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Reversing</strong></td>
+                <td>Reversing the string order.</td>
+                <td><code>"hello"[::-1] → "olleh"</code></td>
+            </tr>
+            <tr>
+                <td><strong>Checking Start/End</strong></td>
+                <td>Checks if a string starts or ends with a specific substring.</td>
+                <td><code>"Python".startswith("Py") → True</code></td>
+            </tr>
+        </table>
+    
+        <h3><strong>Use Cases of String Operations</strong></h3>
+        <ul>
+            <li><strong>Text processing</strong> (e.g., formatting, searching, extracting words)</li>
+            <li><strong>Data cleaning</strong> (e.g., trimming spaces, case normalization)</li>
+            <li><strong>Parsing user input</strong> (e.g., extracting values from a form)</li>
+            <li><strong>Web development</strong> (e.g., URL processing, HTML tag manipulation)</li>
+        </ul>
+    </section>
+    
+
+    <section>
+        <h2><strong>Python Code Examples</strong></h2>
+        
+            <pre><code>
+        # <b>Example 1:</b> Concatenation
+        str1 = "Hello"
+        str2 = "World"
+        result = str1 + " " + str2
+        print(result)  # Output: Hello World
+        
+        # <b>Example 2:</b> Substring Extraction
+        substring = result[0:5]
+        print(substring)  # Output: Hello
+        
+        # <b>Example 3:</b> Searching in a String
+        text = "apple"
+        position = text.find("p")
+        print(position)  # Output: 1
+        
+        # <b>Example 4:</b> Replacing Characters
+        new_text = text.replace("p", "b")
+        print(new_text)  # Output: abble
+        
+        # <b>Example 5:</b> Changing Case
+        uppercase_text = "hello".upper()
+        print(uppercase_text)  # Output: HELLO
+        
+        # <b>Example 6:</b> Stripping Whitespaces
+        trimmed_text = "  Hello  ".strip()
+        print(trimmed_text)  # Output: Hello
+        
+        # <b>Example 7:</b> Splitting a String
+        fruits = "apple,banana,grape"
+        fruit_list = fruits.split(",")
+        print(fruit_list)  # Output: ['apple', 'banana', 'grape']
+        
+        # <b>Example 8:</b> Joining a List into a String
+        joined_text = " ".join(["Python", "is", "awesome"])
+        print(joined_text)  # Output: Python is awesome
+        
+        # <b>Example 9:</b> Reversing a String
+        reversed_text = "Python"[::-1]
+        print(reversed_text)  # Output: nohtyP
+        
+        # <b>Example 10:</b> Checking Start/End of a String
+        print("Python".startswith("Py"))  # Output: True
+        print("Python".endswith("on"))    # Output: True
+            </code></pre>
+        
+            <h3><strong>Key Takeaways:</strong></h3>
+            <ul>
+                <li>String operations are fundamental in text processing.</li>
+                <li>Python provides built-in methods for easy manipulation.</li>
+                <li>Using slicing, searching, and case conversion makes coding efficient.</li>
+            </ul>
+        </section>
+        
+    
+
+        <section>
+            <h2><b>Advantages & Disadvantages</b></h2>
+        
+            <h3>✅ <b>Advantages:</b></h3>
+            <ul>
+                <li><b>Easy to use:</b> Strings provide built-in methods for manipulation.</li>
+                <li><b>Rich operations:</b> Supports concatenation, slicing, searching, formatting, and regex.</li>
+                <li><b>Memory-efficient:</b> Optimized for storage in modern programming languages.</li>
+                <li><b>Unicode support:</b> Handles international characters and emojis.</li>
+                <li><b>String formatting:</b> Useful for dynamic text output using f-strings or format() in Python.</li>
+                <li><b>Wide applications:</b> Used in file handling, data processing, web development, and NLP.</li>
+            </ul>
+        
+            <h3>❌ <b>Disadvantages:</b></h3>
+            <ul>
+                <li><b>Immutability:</b> In many languages (like Python and Java), modifying a string creates a new object, increasing memory usage.</li>
+                <li><b>Concatenation inefficiency:</b> Using `+` repeatedly creates multiple temporary copies, affecting performance.</li>
+                <li><b>Processing large text:</b> Handling very large strings can be slow and memory-intensive.</li>
+                <li><b>Security concerns:</b> String-based input can be vulnerable to injection attacks (e.g., SQL Injection).</li>
+                <li><b>Encoding issues:</b> Character encoding mismatches can lead to errors in text processing.</li>
+            </ul>
+        </section>
+        
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

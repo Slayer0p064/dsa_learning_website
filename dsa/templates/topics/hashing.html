@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashing in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+
+    <header>
+        <h1>Hashing in Data Structures</h1>
+        <p>Hashing is a technique that maps data to a fixed-size array for efficient insertion, deletion, and retrieval.</p>
+    </header>
+
+    <section id="introduction">
+        <h2>What is Hashing?</h2>
+        <p>
+            Hashing is a process of converting an input (key) into a fixed-size value, known as a <b>hash code</b>. 
+            This hash code is used as an index to store data in a <b>hash table</b>, enabling efficient data retrieval.
+        </p>
+    
+        <h3>📌 Key Concepts in Hashing:</h3>
+        <ul>
+            <li><b>Hash Function:</b> A mathematical function that converts input data (keys) into a fixed-size value (hash code).</li>
+            <li><b>Hash Table:</b> A data structure that uses a hash function to map keys to specific index locations for quick lookup.</li>
+            <li><b>Collision:</b> When two different keys produce the same hash code, leading to a conflict in the hash table.</li>
+            <li><b>Load Factor (α):</b> The ratio of the number of stored elements to the total hash table size, affecting performance.</li>
+            <li><b>Rehashing:</b> The process of resizing the hash table when the load factor exceeds a threshold.</li>
+        </ul>
+    
+        <h3>📌 Why Use Hashing?</h3>
+        <p>
+            Hashing is widely used because it allows <b>constant-time (O(1)) lookup</b> in most cases, making it 
+            significantly faster than searching in lists (O(n)) or trees (O(log n)).
+        </p>
+    
+        <h3>📌 Real-World Applications of Hashing:</h3>
+        <ul>
+            <li><b>Database Indexing:</b> Hashing speeds up searches in database management systems.</li>
+            <li><b>Password Storage:</b> Secure password storage using hashing functions like SHA-256.</li>
+            <li><b>Cache Mechanisms:</b> Hashing helps in caching frequently accessed data in memory.</li>
+            <li><b>Blockchain:</b> Cryptographic hashing ensures data integrity in blockchains.</li>
+            <li><b>Load Balancing:</b> Hashing is used in web servers to distribute traffic efficiently.</li>
+        </ul>
+    
+        <h3>📌 Example of Hashing:</h3>
+        <p>Let's say we want to store student records in a hash table using their ID numbers.</p>
+        <pre><code>
+    # Example Hash Table using Python Dictionary
+    student_records = {}
+    
+    # Inserting student data
+    student_records[12345] = "Alice"
+    student_records[67890] = "Bob"
+    
+    # Retrieving student data
+    print(student_records[12345])  # Output: Alice
+        </code></pre>
+    
+        <img src="/static/images/hashing.png" alt="Hashing Representation">
+    </section>
+    
+
+    <section id="techniques">
+        <h2>Common Hashing Techniques</h2>
+        <p>Hash functions map a key to an index in a hash table. Different techniques are used to compute hash values:</p>
+    
+        <h3>📌 1️⃣ Division Method</h3>
+        <p>
+            One of the simplest methods where the hash value is computed using:
+        </p>
+        <p><b>Formula:</b> <code>Hash(key) = key % Table_Size</code></p>
+        <p>
+            The remainder of dividing the key by the table size determines the index.
+            The table size is often chosen as a prime number to reduce collisions.
+        </p>
+        <h4>🔹 Example:</h4>
+        <pre><code>
+    def division_hashing(key, table_size):
+        return key % table_size
+    
+    print(division_hashing(35, 7))  # Output: 0
+    print(division_hashing(50, 7))  # Output: 1
+        </code></pre>
+    
+        <h3>📌 2️⃣ Multiplication Method</h3>
+        <p>
+            Uses a constant fraction <b>k</b> (0 &lt; k &lt; 1) to determine the index.
+        </p>
+        <p><b>Formula:</b> <code>Hash(key) = floor( Table_Size * (key * k % 1) )</code></p>
+        <p>
+            Here, <b>k</b> is a constant (commonly <code>0.6180339887</code>, the golden ratio), and <code>% 1</code> extracts the fractional part.
+        </p>
+        <h4>🔹 Example:</h4>
+        <pre><code>
+    import math
+    
+    def multiplication_hashing(key, table_size, k=0.6180339887):
+        return math.floor(table_size * ((key * k) % 1))
+    
+    print(multiplication_hashing(35, 7))  # Output: 4
+    print(multiplication_hashing(50, 7))  # Output: 1
+        </code></pre>
+    
+        <h3>📌 3️⃣ Mid-Square Method</h3>
+        <p>
+            Squares the key and extracts a portion of the middle digits as the index.
+        </p>
+        <p><b>Formula:</b> Extract middle digits from <code>key²</code></p>
+        <h4>🔹 Example:</h4>
+        <pre><code>
+    def mid_square_hashing(key, table_size):
+        squared = str(key ** 2).zfill(4)  # Square the key and pad with zeros
+        mid_digits = squared[len(squared)//2 - 1 : len(squared)//2 + 1]  # Extract middle digits
+        return int(mid_digits) % table_size  # Modulo table size
+    
+    print(mid_square_hashing(23, 10))  # Output: (529 -> Extract '2' -> 2)
+    print(mid_square_hashing(44, 10))  # Output: (1936 -> Extract '93' -> 3)
+        </code></pre>
+    
+        <h3>📌 4️⃣ Universal Hashing</h3>
+        <p>
+            A randomized hashing technique that selects a function randomly from a family of hash functions to avoid worst-case scenarios.
+        </p>
+        <p><b>Formula:</b> <code>Hash(key) = ((a * key + b) % p) % Table_Size</code></p>
+        <p>
+            - <b>a</b> and <b>b</b> are random constants.<br>
+            - <b>p</b> is a prime number larger than the largest key.
+        </p>
+        <h4>🔹 Example:</h4>
+        <pre><code>
+    import random
+    
+    def universal_hashing(key, table_size, p=101):
+        a = random.randint(1, p - 1)  # Random constant a
+        b = random.randint(0, p - 1)  # Random constant b
+        return ((a * key + b) % p) % table_size
+    
+    print(universal_hashing(35, 7))  # Random output
+    print(universal_hashing(50, 7))  # Random output
+        </code></pre>
+    
+    </section>
+    
+
+    <section id="collision-handling">
+        <h2>Collision Handling Techniques</h2>
+        <p>
+            Since multiple keys can produce the same hash value, collisions must be handled efficiently.
+            The two primary techniques for collision handling are:
+        </p>
+    
+        <h3>📌 1️⃣ Chaining (Separate Chaining)</h3>
+        <p>
+            In this method, each index in the hash table stores a <b>linked list</b> of all elements that hash to the same index.
+        </p>
+        <h4>🔹 Example:</h4>
+        <pre><code>
+    class HashTableChaining:
+        def __init__(self, size):
+            self.size = size
+            self.table = [[] for _ in range(size)]  # Initialize with empty lists
+    
+        def hash_function(self, key):
+            return key % self.size  # Simple division hash function
+    
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            self.table[index].append((key, value))  # Store key-value pairs in a list
+    
+        def search(self, key):
+            index = self.hash_function(key)
+            for k, v in self.table[index]:  # Search within the linked list
+                if k == key:
+                    return v
+            return None  # Key not found
+    
+    # Example Usage
+    hash_table = HashTableChaining(7)
+    hash_table.insert(10, "Apple")
+    hash_table.insert(17, "Banana")  # Collision (17 % 7 == 10 % 7)
+    
+    print(hash_table.search(10))  # Output: "Apple"
+    print(hash_table.search(17))  # Output: "Banana"
+        </code></pre>
+    
+        <h3>📌 2️⃣ Open Addressing</h3>
+        <p>
+            Open addressing stores all elements in the hash table itself. If a collision occurs, it finds an alternative empty slot.
+        </p>
+    
+        <h4>🔹 Types of Open Addressing:</h4>
+    
+        <h3>▶️ Linear Probing</h3>
+        <p>
+            If a collision occurs, check the next available index sequentially.
+        </p>
+        <pre><code>
+    class HashTableLinearProbing:
+        def __init__(self, size):
+            self.size = size
+            self.table = [None] * size
+    
+        def hash_function(self, key):
+            return key % self.size
+    
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            while self.table[index] is not None:  # Find next available slot
+                index = (index + 1) % self.size
+            self.table[index] = (key, value)
+    
+        def search(self, key):
+            index = self.hash_function(key)
+            while self.table[index] is not None:
+                if self.table[index][0] == key:
+                    return self.table[index][1]
+                index = (index + 1) % self.size
+            return None  # Key not found
+    
+    # Example Usage
+    hash_table = HashTableLinearProbing(7)
+    hash_table.insert(10, "Apple")
+    hash_table.insert(17, "Banana")  # Collision handled by moving to next slot
+    
+    print(hash_table.search(10))  # Output: "Apple"
+    print(hash_table.search(17))  # Output: "Banana"
+        </code></pre>
+    
+        <h3>▶️ Quadratic Probing</h3>
+        <p>
+            Instead of checking the next slot sequentially, it checks at quadratic intervals.
+        </p>
+        <pre><code>
+    class HashTableQuadraticProbing:
+        def __init__(self, size):
+            self.size = size
+            self.table = [None] * size
+    
+        def hash_function(self, key):
+            return key % self.size
+    
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            i = 1
+            while self.table[index] is not None:
+                index = (index + i**2) % self.size  # Quadratic increment
+                i += 1
+            self.table[index] = (key, value)
+    
+        def search(self, key):
+            index = self.hash_function(key)
+            i = 1
+            while self.table[index] is not None:
+                if self.table[index][0] == key:
+                    return self.table[index][1]
+                index = (index + i**2) % self.size
+                i += 1
+            return None  # Key not found
+    
+    # Example Usage
+    hash_table = HashTableQuadraticProbing(7)
+    hash_table.insert(10, "Apple")
+    hash_table.insert(17, "Banana")  # Collision handled using quadratic probing
+    
+    print(hash_table.search(10))  # Output: "Apple"
+    print(hash_table.search(17))  # Output: "Banana"
+        </code></pre>
+    
+        <h3>▶️ Double Hashing</h3>
+        <p>
+            Uses a second hash function to determine the next slot in case of a collision.
+        </p>
+        <pre><code>
+    class HashTableDoubleHashing:
+        def __init__(self, size):
+            self.size = size
+            self.table = [None] * size
+    
+        def hash1(self, key):
+            return key % self.size
+    
+        def hash2(self, key):
+            return 5 - (key % 5)  # Second hash function
+    
+        def insert(self, key, value):
+            index = self.hash1(key)
+            step = self.hash2(key)
+            while self.table[index] is not None:
+                index = (index + step) % self.size  # Use double hashing step
+            self.table[index] = (key, value)
+    
+        def search(self, key):
+            index = self.hash1(key)
+            step = self.hash2(key)
+            while self.table[index] is not None:
+                if self.table[index][0] == key:
+                    return self.table[index][1]
+                index = (index + step) % self.size
+            return None  # Key not found
+    
+    # Example Usage
+    hash_table = HashTableDoubleHashing(7)
+    hash_table.insert(10, "Apple")
+    hash_table.insert(17, "Banana")  # Collision handled using double hashing
+    
+    print(hash_table.search(10))  # Output: "Apple"
+    print(hash_table.search(17))  # Output: "Banana"
+        </code></pre>
+    
+    </section>
+    
+
+    <section id="python-examples">
+        <h2>Python Code Examples</h2>
+    
+        <h3>📌 1️⃣ Basic Hash Table Implementation (Using Python Dictionary)</h3>
+        <p>Python provides a built-in dictionary that acts as a highly optimized hash table.</p>
+        <pre><code>
+    # Simple Hash Table in Python using a dictionary
+    hash_table = {}
+    
+    # Inserting data
+    hash_table["apple"] = 10
+    hash_table["banana"] = 20
+    
+    # Retrieving data
+    print(hash_table["apple"])  # Output: 10
+        </code></pre>
+    
+        <h3>📌 2️⃣ Custom Hash Table with Chaining (Separate Chaining Method)</h3>
+        <p>Handles collisions by storing multiple key-value pairs in a linked list at the same index.</p>
+        <pre><code>
+    class HashTableChaining:
+        def __init__(self, size):
+            self.size = size
+            self.table = [[] for _ in range(size)]
+    
+        def hash_function(self, key):
+            return hash(key) % self.size
+    
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            self.table[index].append((key, value))  # Append key-value pair
+    
+        def search(self, key):
+            index = self.hash_function(key)
+            for k, v in self.table[index]:
+                if k == key:
+                    return v
+            return None  # Key not found
+    
+    # Example Usage
+    ht = HashTableChaining(10)
+    ht.insert("apple", 30)
+    ht.insert("banana", 50)
+    print(ht.search("apple"))  # Output: 30
+        </code></pre>
+    
+        <h3>📌 3️⃣ Open Addressing - Linear Probing</h3>
+        <p>Finds the next available slot sequentially if a collision occurs.</p>
+        <pre><code>
+    class HashTableLinearProbing:
+        def __init__(self, size):
+            self.size = size
+            self.table = [None] * size
+    
+        def hash_function(self, key):
+            return hash(key) % self.size
+    
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            while self.table[index] is not None:  # Check for next available slot
+                index = (index + 1) % self.size
+            self.table[index] = (key, value)
+    
+        def search(self, key):
+            index = self.hash_function(key)
+            while self.table[index] is not None:
+                if self.table[index][0] == key:
+                    return self.table[index][1]
+                index = (index + 1) % self.size
+            return None  # Key not found
+    
+    # Example Usage
+    ht = HashTableLinearProbing(10)
+    ht.insert("apple", 40)
+    ht.insert("banana", 60)
+    print(ht.search("banana"))  # Output: 60
+        </code></pre>
+    
+        <h3>📌 4️⃣ Open Addressing - Quadratic Probing</h3>
+        <p>Uses quadratic increments (i²) to find the next available slot.</p>
+        <pre><code>
+    class HashTableQuadraticProbing:
+        def __init__(self, size):
+            self.size = size
+            self.table = [None] * size
+    
+        def hash_function(self, key):
+            return hash(key) % self.size
+    
+        def insert(self, key, value):
+            index = self.hash_function(key)
+            i = 1
+            while self.table[index] is not None:
+                index = (index + i ** 2) % self.size  # Quadratic probing
+                i += 1
+            self.table[index] = (key, value)
+    
+        def search(self, key):
+            index = self.hash_function(key)
+            i = 1
+            while self.table[index] is not None:
+                if self.table[index][0] == key:
+                    return self.table[index][1]
+                index = (index + i ** 2) % self.size
+                i += 1
+            return None  # Key not found
+    
+    # Example Usage
+    ht = HashTableQuadraticProbing(10)
+    ht.insert("apple", 50)
+    ht.insert("banana", 80)
+    print(ht.search("banana"))  # Output: 80
+        </code></pre>
+    
+        <h3>📌 5️⃣ Open Addressing - Double Hashing</h3>
+        <p>Uses a second hash function to resolve collisions.</p>
+        <pre><code>
+    class HashTableDoubleHashing:
+        def __init__(self, size):
+            self.size = size
+            self.table = [None] * size
+    
+        def hash1(self, key):
+            return hash(key) % self.size
+    
+        def hash2(self, key):
+            return 5 - (hash(key) % 5)  # Second hash function
+    
+        def insert(self, key, value):
+            index = self.hash1(key)
+            step = self.hash2(key)
+            while self.table[index] is not None:
+                index = (index + step) % self.size
+            self.table[index] = (key, value)
+    
+        def search(self, key):
+            index = self.hash1(key)
+            step = self.hash2(key)
+            while self.table[index] is not None:
+                if self.table[index][0] == key:
+                    return self.table[index][1]
+                index = (index + step) % self.size
+            return None  # Key not found
+    
+    # Example Usage
+    ht = HashTableDoubleHashing(10)
+    ht.insert("apple", 90)
+    ht.insert("banana", 100)
+    print(ht.search("banana"))  # Output: 100
+        </code></pre>
+    
+        <h3>📌 6️⃣ Comparison: Python Dictionary vs. Custom Hash Table</h3>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Python Dictionary</th>
+                <th>Custom Hash Table</th>
+            </tr>
+            <tr>
+                <td>Speed</td>
+                <td>Highly optimized (O(1) avg.)</td>
+                <td>Slower, depends on implementation</td>
+            </tr>
+            <tr>
+                <td>Collision Handling</td>
+                <td>Automatically managed</td>
+                <td>Needs manual handling (Chaining/Open Addressing)</td>
+            </tr>
+            <tr>
+                <td>Memory Usage</td>
+                <td>Efficient</td>
+                <td>May require extra space for linked lists</td>
+            </tr>
+            <tr>
+                <td>Flexibility</td>
+                <td>Supports complex data types</td>
+                <td>Customizable but requires more code</td>
+            </tr>
+        </table>
+    
+    </section>
+    
+
+    <section id="real-world">
+        <h2>Real-World Applications of Hashing</h2>
+        <p>Hashing is widely used in various fields for efficient data retrieval, security, and optimization.</p>
+        
+        <ul>
+            <li><strong>Database Indexing:</strong> Hash-based indexes speed up search operations in databases like MySQL and PostgreSQL.</li>
+    
+            <li><strong>Password Security:</strong> Secure hash functions (e.g., SHA-256, Bcrypt) encrypt passwords to prevent unauthorized access.</li>
+    
+            <li><strong>Data Deduplication:</strong> Cloud storage platforms (e.g., Google Drive, Dropbox) use hashing to detect and remove duplicate files.</li>
+    
+            <li><strong>Symbol Tables in Compilers:</strong> Hashing is used in programming languages to quickly lookup variable names and function identifiers.</li>
+    
+            <li><strong>Cache Management:</strong> Web browsers and DNS caching use hashing to store frequently accessed data for faster retrieval.</li>
+    
+            <li><strong>Blockchain Technology:</strong> Cryptographic hash functions are fundamental to blockchain security and digital signatures (e.g., Bitcoin, Ethereum).</li>
+    
+            <li><strong>Load Balancing:</strong> Web servers use consistent hashing to distribute network traffic efficiently across multiple servers.</li>
+    
+            <li><strong>Plagiarism Detection:</strong> Algorithms like MinHash are used to detect duplicate or similar content in documents and research papers.</li>
+    
+            <li><strong>URL Shortening:</strong> Services like Bitly and TinyURL use hashing to generate short, unique URLs.</li>
+    
+            <li><strong>Machine Learning:</strong> Feature hashing (also called the "hashing trick") converts text data into numerical form for efficient processing.</li>
+        </ul>
+    </section>
+    
+
+    <section id="complexity">
+        <h2>Time & Space Complexity of Hashing</h2>
+        <p>Hashing is efficient for storing and retrieving data. However, performance varies based on the hash function and collision resolution technique.</p>
+    
+        <table>
+            <tr>
+                <th>Operation</th>
+                <th>Average Case</th>
+                <th>Worst Case</th>
+                <th>Space Complexity</th>
+            </tr>
+            <tr>
+                <td><strong>Insertion</strong></td>
+                <td>O(1)</td>
+                <td>O(n) (in case of excessive collisions)</td>
+                <td>O(n)</td>
+            </tr>
+            <tr>
+                <td><strong>Search</strong></td>
+                <td>O(1)</td>
+                <td>O(n) (if all keys map to the same index)</td>
+                <td>O(n)</td>
+            </tr>
+            <tr>
+                <td><strong>Deletion</strong></td>
+                <td>O(1)</td>
+                <td>O(n)</td>
+                <td>O(n)</td>
+            </tr>
+        </table>
+    
+        <h3>🔹 Key Takeaways:</h3>
+        <ul>
+            <li><strong>O(1) on average:</strong> Hashing provides constant-time operations for insertion, search, and deletion.</li>
+            <li><strong>O(n) in the worst case:</strong> Poor hash functions or excessive collisions can degrade performance.</li>
+            <li><strong>Collision resolution is crucial:</strong> Techniques like chaining and probing help optimize performance.</li>
+            <li><strong>Space Complexity remains O(n):</strong> Storage is proportional to the number of elements.</li>
+        </ul>
+    </section>
+    
+
+    <section id="comparison">
+        <h2>Hashing vs. Other Data Structures</h2>
+        <p>Hashing provides efficient lookups, but it differs from other structures like Binary Search Trees (BSTs) and Arrays in various aspects.</p>
+    
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Hashing</th>
+                <th>Binary Search Tree (BST)</th>
+                <th>Array</th>
+                <th>Linked List</th>
+            </tr>
+            <tr>
+                <td><strong>Search Time Complexity</strong></td>
+                <td>O(1) (avg.), O(n) (worst)</td>
+                <td>O(log n) (balanced) / O(n) (unbalanced)</td>
+                <td>O(n) (unsorted) / O(log n) (sorted)</td>
+                <td>O(n)</td>
+            </tr>
+            <tr>
+                <td><strong>Insertion Time Complexity</strong></td>
+                <td>O(1) (avg.), O(n) (worst in case of collisions)</td>
+                <td>O(log n) (balanced) / O(n) (unbalanced)</td>
+                <td>O(n) (sorted) / O(1) (unsorted)</td>
+                <td>O(1) (at head) / O(n) (at arbitrary position)</td>
+            </tr>
+            <tr>
+                <td><strong>Deletion Time Complexity</strong></td>
+                <td>O(1) (avg.), O(n) (worst)</td>
+                <td>O(log n) (balanced) / O(n) (unbalanced)</td>
+                <td>O(n) (sorted) / O(1) (unsorted)</td>
+                <td>O(1) (at head) / O(n) (at arbitrary position)</td>
+            </tr>
+            <tr>
+                <td><strong>Ordered Storage</strong></td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><strong>Best Use Case</strong></td>
+                <td>Fast lookups</td>
+                <td>Sorted Data, Range Queries</td>
+                <td>Sequential Access, Static Data</td>
+                <td>Dynamic Memory Allocation</td>
+            </tr>
+            <tr>
+                <td><strong>Memory Efficiency</strong></td>
+                <td>Moderate (depends on load factor)</td>
+                <td>Efficient (if balanced)</td>
+                <td>Efficient (contiguous storage)</td>
+                <td>Less efficient (due to pointers)</td>
+            </tr>
+        </table>
+    
+        <h3>🔹 Key Takeaways:</h3>
+        <ul>
+            <li><strong>Hashing:</strong> Best for quick lookups but doesn't maintain order.</li>
+            <li><strong>Binary Search Trees:</strong> Efficient for sorted data and range queries.</li>
+            <li><strong>Arrays:</strong> Simple and efficient for sequential access but slow for insertions/deletions.</li>
+            <li><strong>Linked Lists:</strong> Great for dynamic memory allocation but slow for searching.</li>
+        </ul>
+    </section>
+    
+
+    <section id="advantages-disadvantages">
+        <h2>✅ Advantages & ❌ Disadvantages of Hashing</h2>
+    
+        <h3>✅ Advantages of Hashing:</h3>
+        <ul>
+            <li><b>Fast Lookup:</b> Provides constant-time (O(1)) search on average.</li>
+            <li><b>Efficient Data Storage:</b> Enables quick access to large datasets.</li>
+            <li><b>Dynamic Resizing:</b> Many hash tables can resize dynamically to maintain efficiency.</li>
+            <li><b>Versatile Applications:</b> Used in databases (indexing), cryptography (password hashing), and networking (caching, load balancing).</li>
+            <li><b>Supports Large Data:</b> Efficiently manages large amounts of data with minimal overhead.</li>
+        </ul>
+    
+        <h3>❌ Disadvantages of Hashing:</h3>
+        <ul>
+            <li><b>Collisions:</b> Multiple keys can map to the same index, requiring additional handling techniques.</li>
+            <li><b>Memory Overhead:</b> Some implementations waste extra memory to avoid collisions.</li>
+            <li><b>Not Ordered:</b> Unlike BSTs or linked lists, hashing does not maintain sorted order.</li>
+            <li><b>Rehashing Cost:</b> When the table grows, rehashing can be computationally expensive.</li>
+            <li><b>Poor Performance in Worst Case:</b> With too many collisions, performance may degrade to O(n).</li>
+        </ul>
+    </section>
+    
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrays in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Arrays in Data Structures</h1>
+        <p>An array is a collection of elements stored at contiguous memory locations.</p>
+    </header>
+
+    <section>
+        <h2>What is an Array?</h2>
+        <p>An array is a data structure that holds a fixed number of values of the same type. It is one of the simplest and most widely used data structures in programming.</p>
+    
+        <h3>Key Features of Arrays</h3>
+        <ul>
+            <li><b>Random Access</b>: Arrays allow direct access to any element using its index. For example, <code>arr[3]</code> gives the 4th element in constant time (O(1)).</li>
+            <li><b>Contiguous Memory</b>: Elements are stored in adjacent memory locations, making arrays cache-friendly and efficient for traversal.</li>
+            <li><b>Fixed Size</b>: The size of an array is determined at the time of creation and cannot be changed dynamically (in most programming languages).</li>
+            <li><b>Insertion/Deletion</b>: Inserting or deleting elements in the middle of an array is expensive (O(n)) because it requires shifting elements.</li>
+            <li><b>Efficient Iteration</b>: Arrays can be traversed easily using loops, making them useful for batch operations.</li>
+        </ul>
+    
+        <h3>Types of Arrays</h3>
+        <ul>
+            <li><b>One-Dimensional Array</b>: A simple list of elements. Example: <code>arr = [10, 20, 30, 40]</code></li>
+            <li><b>Two-Dimensional Array</b>: A matrix-like structure. Example: <code>matrix = [[1, 2], [3, 4]]</code></li>
+            <li><b>Multi-Dimensional Array</b>: Arrays with more than two dimensions, commonly used in scientific computing.</li>
+        </ul>
+    
+        <h3>Basic Operations</h3>
+        <pre>
+        # Python Implementation
+        arr = [1, 2, 3, 4, 5]
+    
+        # Accessing an element
+        print(arr[2])  # Output: 3
+    
+        # Inserting an element
+        arr.insert(2, 10)  # Inserts 10 at index 2
+    
+        # Deleting an element
+        arr.remove(3)  # Removes the first occurrence of 3
+    
+        # Traversing an array
+        for num in arr:
+            print(num)
+        </pre>
+    
+        <h3>Advantages of Arrays</h3>
+        <ul>
+            <li>Fast lookup (O(1) for index-based access).</li>
+            <li>Memory efficiency due to contiguous allocation.</li>
+            <li>Suitable for storing large amounts of data with known size.</li>
+        </ul>
+    
+        <h3>Disadvantages of Arrays</h3>
+        <ul>
+            <li>Fixed size makes dynamic resizing difficult.</li>
+            <li>Insertion and deletion in the middle require shifting (O(n)).</li>
+            <li>Can lead to wasted memory if allocated size is too large.</li>
+        </ul>
+    
+        <h3>Real-World Applications of Arrays</h3>
+        <ul>
+            <li><b>Databases</b>: Used for indexing and storing records efficiently.</li>
+            <li><b>Game Development</b>: Storing character attributes, game states, and object properties.</li>
+            <li><b>Image Processing</b>: Storing pixel data in multi-dimensional arrays.</li>
+            <li><b>Scheduling Algorithms</b>: Managing tasks and events in a queue-like manner.</li>
+            <li><b>Machine Learning</b>: Arrays (NumPy arrays) are fundamental in data manipulation and model training.</li>
+        </ul>
+    
+        <img src="/static/images/arrays.png" alt="Array Representation">
+    </section>
+    
+    <section>
+        <h2><strong>Memory Layout of Arrays</strong></h2>
+        <p>Arrays are allocated in a <strong>contiguous block of memory</strong>, meaning all elements are stored next to each other. This structure provides various advantages and limitations.</p>
+    
+        <h3><strong>Memory Allocation in Arrays</strong></h3>
+        <ul>
+            <li><strong>Static Allocation</strong>: In languages like C, arrays have a fixed size at compile-time.</li>
+            <li><strong>Dynamic Allocation</strong>: Using <code>malloc()</code> or <code>new</code> in C/C++, arrays can be allocated at runtime.</li>
+            <li><strong>Stack vs Heap Storage</strong>: 
+                <ul>
+                    <li><strong>Local arrays</strong> (fixed size) are stored in the <strong>stack</strong>.</li>
+                    <li><strong>Dynamically allocated arrays</strong> reside in the <strong>heap</strong>, requiring manual memory management.</li>
+                </ul>
+            </li>
+        </ul>
+    
+        <h3><strong>Endianness and Array Storage</strong></h3>
+        <p>Depending on the system architecture, an array's bytes are stored in either:</p>
+        <ul>
+            <li><strong>Little Endian</strong>: Least significant byte stored first.</li>
+            <li><strong>Big Endian</strong>: Most significant byte stored first.</li>
+        </ul>
+    
+        <h3><strong>Memory Fragmentation Issues</strong></h3>
+        <p>When dynamically allocating arrays, <strong>memory fragmentation</strong> can occur:</p>
+        <ul>
+            <li><strong>External Fragmentation</strong>: Free memory is available but in non-contiguous blocks.</li>
+            <li><strong>Internal Fragmentation</strong>: Allocated memory may be larger than required, wasting space.</li>
+        </ul>
+    
+        <h3><strong>Alignment and Padding</strong></h3>
+        <p>In some architectures, array elements are aligned to specific memory addresses to improve performance. This can lead to:</p>
+        <ul>
+            <li><strong>Padding Bytes</strong>: Extra unused bytes inserted between elements for alignment.</li>
+            <li><strong>Misalignment Issues</strong>: Performance loss if an element is not aligned properly.</li>
+        </ul>
+    
+        <h3><strong>Multidimensional Array Storage</strong></h3>
+        <p>For <strong>2D arrays</strong>, there are two common memory layouts:</p>
+        <ul>
+            <li><strong>Row-Major Order</strong>: Stores row elements sequentially in memory (<strong>used in C, Python</strong>).</li>
+            <li><strong>Column-Major Order</strong>: Stores column elements sequentially (<strong>used in Fortran, MATLAB</strong>).</li>
+        </ul>
+    
+        <h3><strong>Cache Performance Considerations</strong></h3>
+        <p>Access patterns affect <strong>cache efficiency</strong>:</p>
+        <ul>
+            <li><strong>Sequential Access</strong>: Faster due to prefetching (<strong>cache-friendly</strong>).</li>
+            <li><strong>Random Access</strong>: Slower due to potential <strong>cache misses</strong>.</li>
+        </ul>
+    
+        <img src="/static/images/memory_layout_advanced.png" alt="Advanced Memory Layout of Arrays">
+    </section>
+    
+
+    <section>
+        <h2><strong>Types of Arrays</strong></h2>
+    
+        <h3><strong>1. One-Dimensional Arrays (1D)</strong></h3>
+        <p>A <strong>1D array</strong> is a simple list where elements are stored sequentially in memory.</p>
+        <ul>
+            <li><strong>Advantage:</strong> Simple and efficient for linear data storage.</li>
+            <li><strong>Use Case:</strong> Storing lists like shopping items, student names, or sensor readings.</li>
+        </ul>
+        <p><strong>Example:</strong> A shopping list:</p>
+        <pre><code>
+    shopping_list = ['Milk', 'Eggs', 'Bread']
+    print(shopping_list[1])  # Output: Eggs
+        </code></pre>
+    
+        <h3><strong>2. Two-Dimensional Arrays (2D)</strong></h3>
+        <p>A <strong>2D array</strong> is structured like a matrix or table, where data is stored in rows and columns.</p>
+        <ul>
+            <li><strong>Advantage:</strong> Efficient for tabular data representation.</li>
+            <li><strong>Use Case:</strong> Used in spreadsheets, image processing, and game development (e.g., Chessboard).</li>
+        </ul>
+        <p><strong>Example:</strong> A Chessboard representation:</p>
+        <pre><code>
+    chessboard = [
+        ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
+        ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.', '.', '.'],
+        ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+        ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']
+    ]
+    print(chessboard[0][3])  # Output: Q (Queen)
+        </code></pre>
+    
+        <h3><strong>3. Three-Dimensional Arrays (3D)</strong></h3>
+        <p>A <strong>3D array</strong> adds a third dimension, allowing data to be structured in layers.</p>
+        <ul>
+            <li><strong>Advantage:</strong> Useful for handling complex structures like 3D graphics and simulations.</li>
+            <li><strong>Use Case:</strong> Used in video games (3D objects), medical imaging (MRI scans), and deep learning.</li>
+        </ul>
+        <p><strong>Example:</strong> A 3D representation of a Rubik’s Cube:</p>
+        <pre><code>
+    rubiks_cube = [
+        [ ['R', 'G', 'B'], ['O', 'W', 'Y'], ['B', 'G', 'O'] ],
+        [ ['Y', 'O', 'R'], ['G', 'B', 'W'], ['O', 'Y', 'G'] ],
+        [ ['W', 'B', 'Y'], ['R', 'O', 'G'], ['Y', 'W', 'B'] ]
+    ]
+    print(rubiks_cube[1][2][0])  # Output: O (Orange)
+        </code></pre>
+    
+        <h3><strong>4. Jagged Arrays</strong></h3>
+        <p>A <strong>jagged array</strong> is an array of arrays where each row can have a different number of elements.</p>
+        <ul>
+            <li><strong>Advantage:</strong> More memory-efficient than 2D arrays when row sizes vary.</li>
+            <li><strong>Use Case:</strong> Storing data where each row has a different number of elements, such as student test scores.</li>
+        </ul>
+        <p><strong>Example:</strong> Storing student grades:</p>
+        <pre><code>
+    student_grades = [
+        [85, 90, 78],  # Student 1
+        [88, 92],      # Student 2
+        [75, 80, 85, 90]  # Student 3
+    ]
+    print(student_grades[2][1])  # Output: 80
+        </code></pre>
+    
+        <h3><strong>5. Sparse Arrays</strong></h3>
+        <p>A <strong>sparse array</strong> is an array where most of the elements are empty (zeros or nulls), requiring special storage techniques.</p>
+        <ul>
+            <li><strong>Advantage:</strong> Saves memory by storing only non-zero values.</li>
+            <li><strong>Use Case:</strong> Used in machine learning, graphs, and large datasets with many zero values.</li>
+        </ul>
+        <p><strong>Example:</strong> Representing a sparse matrix using a dictionary:</p>
+        <pre><code>
+    sparse_matrix = {
+        (0, 3): 5,
+        (2, 1): 8,
+        (4, 2): 3
+    }
+    print(sparse_matrix.get((2, 1), 0))  # Output: 8
+    print(sparse_matrix.get((1, 1), 0))  # Output: 0 (default)
+        </code></pre>
+    
+    </section>
+    
+
+    <section>
+        <h2><strong>Static vs Dynamic Arrays</strong></h2>
+        
+        <p>Arrays can be classified into <strong>Static</strong> and <strong>Dynamic</strong> arrays based on their memory allocation and resizing capabilities.</p>
+        
+        <table border="1">
+            <tr>
+                <th><strong>Feature</strong></th>
+                <th><strong>Static Arrays</strong></th>
+                <th><strong>Dynamic Arrays (Python List)</strong></th>
+            </tr>
+            <tr>
+                <td><strong>Size</strong></td>
+                <td>Fixed at declaration</td>
+                <td>Can grow/shrink dynamically</td>
+            </tr>
+            <tr>
+                <td><strong>Performance</strong></td>
+                <td>Faster (O(1) for access)</td>
+                <td>May need reallocation, which can be O(n) in worst cases</td>
+            </tr>
+            <tr>
+                <td><strong>Memory</strong></td>
+                <td>Efficient (no extra overhead)</td>
+                <td>Extra memory allocated for resizing</td>
+            </tr>
+            <tr>
+                <td><strong>Resizing</strong></td>
+                <td>Not possible after declaration</td>
+                <td>Automatically expands when needed</td>
+            </tr>
+            <tr>
+                <td><strong>Usage</strong></td>
+                <td>Used in low-level programming (C, embedded systems)</td>
+                <td>Used in high-level languages (Python, JavaScript, Java)</td>
+            </tr>
+        </table>
+    
+        <h3><strong>Example: Static Array (C)</strong></h3>
+        <pre><code>
+    #include &lt;stdio.h&gt;
+    
+    int main() {
+        int arr[5] = {10, 20, 30, 40, 50}; // Fixed size array
+        printf("%d", arr[2]); // Output: 30
+        return 0;
+    }
+        </code></pre>
+    
+        <h3><strong>Example: Dynamic Array (Python List)</strong></h3>
+        <pre><code>
+    arr = [10, 20, 30, 40, 50]  # Dynamic array (Python list)
+    arr.append(60)  # Expands automatically
+    print(arr)  # Output: [10, 20, 30, 40, 50, 60]
+        </code></pre>
+    
+        <h3><strong>Use Cases</strong></h3>
+        <ul>
+            <li><strong>Static Arrays:</strong> Best for situations where the size is known beforehand (e.g., embedded systems, real-time applications).</li>
+            <li><strong>Dynamic Arrays:</strong> Useful when the size is unpredictable (e.g., user input lists, database results).</li>
+        </ul>
+    </section>
+    
+    <section>
+        <h2>Python Code Examples</h2>
+
+        <h3>1. Creating and Accessing an Array</h3>
+        <pre><code>
+import array
+
+# Creating an array of integers
+arr = array.array('i', [10, 20, 30, 40, 50])
+
+# Accessing elements
+print("First element:", arr[0])  # Output: 10
+print("Last element:", arr[-1])  # Output: 50
+        </code></pre>
+        <p><b>Explanation:</b> This code creates an integer array and accesses the first and last elements using indexing.</p>
+
+        <h3>2. Using Python Lists as Dynamic Arrays</h3>
+        <pre><code>
+arr = [10, 20, 30, 40, 50]
+arr.append(60)  
+arr.insert(2, 25)  
+arr.remove(30)  
+
+print(arr)  # Output: [10, 20, 25, 40, 50, 60]
+        </code></pre>
+        <p><b>Explanation:</b> This code demonstrates how to use Python lists for dynamic array operations like appending, inserting, and removing elements.</p>
+    </section>
+
+    <section>
+        <h2>LeetCode Interview Questions on Arrays</h2>
+
+        <h3>1. Two Sum (LeetCode 1)</h3>
+        <pre><code>
+def two_sum(nums, target):
+    num_map = {}
+    for i, num in enumerate(nums):
+        diff = target - num
+        if diff in num_map:
+            return [num_map[diff], i]
+        num_map[num] = i
+    return []
+
+print(two_sum([2, 7, 11, 15], 9))  # Output: [0, 1]
+        </code></pre>
+        <p><b>Explanation:</b> The function finds two indices such that their sum equals the target.</p>
+
+        <h3>2. Maximum Subarray (Kadane's Algorithm) (LeetCode 53)</h3>
+        <pre><code>
+def max_subarray(nums):
+    max_sum = curr_sum = nums[0]
+    for num in nums[1:]:
+        curr_sum = max(num, curr_sum + num)
+        max_sum = max(max_sum, curr_sum)
+    return max_sum
+
+print(max_subarray([-2,1,-3,4,-1,2,1,-5,4]))  # Output: 6
+        </code></pre>
+        <p><b>Explanation:</b> This code finds the contiguous subarray with the maximum sum using Kadane’s algorithm.</p>
+
+        <h3>3. Rotate Array (LeetCode 189)</h3>
+        <pre><code>
+def rotate(nums, k):
+    k %= len(nums)
+    nums[:] = nums[-k:] + nums[:-k]
+
+arr = [1,2,3,4,5,6,7]
+rotate(arr, 3)
+print(arr)  # Output: [5, 6, 7, 1, 2, 3, 4]
+        </code></pre>
+        <p><b>Explanation:</b> This function rotates the array to the right by <code>k</code> steps.</p>
+
+        <h3>4. Find Duplicate (LeetCode 287)</h3>
+        <pre><code>
+def findDuplicate(nums):
+    slow, fast = nums[0], nums[nums[0]]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+    slow = 0
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow
+
+print(findDuplicate([1,3,4,2,2]))  # Output: 2
+        </code></pre>
+        <p><b>Explanation:</b> This code finds the duplicate number using Floyd’s cycle detection algorithm.</p>
+    </section>
+
+    <section>
+        <h2>Things to Keep in Mind About Arrays</h2>
+        <ul>
+            <li><b>Fixed Size:</b> Once declared, the size of a static array cannot change.</li>
+            <li><b>Efficient Access:</b> Arrays allow O(1) access time due to indexing.</li>
+            <li><b>Insertion & Deletion Cost:</b> Adding/removing elements in the middle requires shifting, making it O(n).</li>
+            <li><b>Memory Allocation:</b> Contiguous memory allocation improves cache efficiency.</li>
+            <li><b>Best for Read-Heavy Tasks:</b> If your task involves frequent lookups, arrays are a good choice.</li>
+            <li><b>Not Always Ideal for Dynamic Data:</b> If the size of the data changes frequently, consider using linked lists or dynamic arrays.</li>
+            <li><b>Sorting & Searching:</b> Sorting (like quicksort, mergesort) and searching (binary search for sorted arrays) are common operations on arrays.</li>
+        </ul>
+    </section>
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>  
+</html>

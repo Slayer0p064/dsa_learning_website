@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queues in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Queues in Data Structures</h1>
+        <p>A queue is a linear data structure that follows the <b>First In, First Out (FIFO)</b> principle.</p>
+    </header>
+
+    <section id="introduction">
+        <h2>📌 What is a Queue?</h2>
+        <p>A <strong>Queue</strong> is a <strong>linear data structure</strong> that follows the <strong>First In, First Out (FIFO)</strong> principle. This means that the first element added to the queue will be the first one to be removed, similar to a queue in real life.</p>
+    
+        <h3>⚙️ Characteristics of a Queue</h3>
+        <ul>
+            <li>✅ <strong>FIFO (First In, First Out):</strong> The element that enters first is processed first.</li>
+            <li>✅ <strong>Sequential Processing:</strong> Elements are processed in the same order they arrive.</li>
+            <li>✅ <strong>Two Primary Operations:</strong>
+                <ul>
+                    <li>🔹 <strong>Enqueue:</strong> Adds an element to the <strong>rear</strong> (end) of the queue.</li>
+                    <li>🔹 <strong>Dequeue:</strong> Removes an element from the <strong>front</strong> of the queue.</li>
+                </ul>
+            </li>
+            <li>✅ <strong>Front Pointer:</strong> Tracks the first element in the queue.</li>
+            <li>✅ <strong>Rear Pointer:</strong> Tracks the last element in the queue.</li>
+        </ul>
+    
+        <h3>📌 Real-World Analogy</h3>
+        <p>A queue at a <strong>ticket counter</strong> or a <strong>checkout line</strong> in a store is a real-world example of this data structure:</p>
+        <ul>
+            <li>🎟️ People join the queue at the <strong>end (rear).</strong></li>
+            <li>👤 The person at the <strong>front is served first.</strong></li>
+            <li>👥 New people arrive at the <strong>back, and the line moves forward.</strong></li>
+        </ul>
+    
+        <h3>🖼️ Visual Representation</h3>
+        <p>Below is a simple representation of a queue:</p>
+        <img src="/static/images/queue.png" alt="Queue Representation">
+    
+        <h3>🔹 Importance of Queues</h3>
+        <p>Queues are widely used in various applications where <strong>order of processing is important</strong>, such as:</p>
+        <ul>
+            <li>🎯 <strong>Task Scheduling:</strong> Used in CPU scheduling, printer queues, and OS process management.</li>
+            <li>📨 <strong>Data Handling:</strong> Used in buffering, streaming services, and network packet processing.</li>
+            <li>🔍 <strong>Graph Traversal:</strong> Breadth-First Search (BFS) in graph algorithms relies on queues.</li>
+            <li>🎮 <strong>Multithreading:</strong> Helps in managing task execution in concurrent programming.</li>
+        </ul>
+    </section>
+    
+
+    <section id="types">
+        <h2>Types of Queues</h2>
+        <p>Queues come in different variations to suit various applications. Below are the main types:</p>
+    
+        <h3>1. Simple Queue (Linear Queue)</h3>
+        <p>A standard queue where elements follow the <strong>FIFO (First In, First Out)</strong> principle:</p>
+        <ul>
+            <li><b>Insertion (Enqueue):</b> Performed at the <i>rear</i> of the queue.</li>
+            <li><b>Deletion (Dequeue):</b> Performed from the <i>front</i> of the queue.</li>
+        </ul>
+        <p><b>Example:</b> Managing customers in a ticketing system.</p>
+    
+        <h3>2. Circular Queue</h3>
+        <p>A queue where the last position is connected back to the first, forming a circular structure:</p>
+        <ul>
+            <li>Utilizes memory more efficiently than a simple queue.</li>
+            <li>The <i>front</i> and <i>rear</i> pointers wrap around when the queue reaches the end.</li>
+        </ul>
+        <p><b>Example:</b> CPU process scheduling.</p>
+    
+        <h3>3. Double-Ended Queue (Deque)</h3>
+        <p>A queue where insertion and deletion can occur from both ends:</p>
+        <ul>
+            <li>Supports adding and removing elements from both the <i>front</i> and <i>rear</i>.</li>
+            <li>More flexible than a simple queue.</li>
+        </ul>
+        <p><b>Example:</b> Undo/Redo operations in text editors.</p>
+    
+        <h3>4. Priority Queue</h3>
+        <p>A queue where elements are dequeued based on priority rather than arrival order:</p>
+        <ul>
+            <li>Each element has an associated priority level.</li>
+            <li>Higher priority elements are served before lower priority ones.</li>
+        </ul>
+        <p><b>Example:</b> Emergency rooms in hospitals, task scheduling in operating systems.</p>
+    </section>
+    
+
+    <section id="operations">
+        <h2>Operations on Queues</h2>
+        <p>Queues support several fundamental operations that allow efficient data handling:</p>
+        
+        <table border="1">
+            <tr>
+                <th>Operation</th>
+                <th>Description</th>
+                <th>Time Complexity</th>
+            </tr>
+            <tr>
+                <td><b>Enqueue (Insertion)</b></td>
+                <td>Adds an element to the <i>rear</i> of the queue.</td>
+                <td>O(1)</td>
+            </tr>
+            <tr>
+                <td><b>Dequeue (Deletion)</b></td>
+                <td>Removes an element from the <i>front</i> of the queue.</td>
+                <td>O(1)</td>
+            </tr>
+            <tr>
+                <td><b>Peek (Front)</b></td>
+                <td>Returns the front element <i>without removing it</i>.</td>
+                <td>O(1)</td>
+            </tr>
+            <tr>
+                <td><b>IsEmpty</b></td>
+                <td>Checks whether the queue is empty.</td>
+                <td>O(1)</td>
+            </tr>
+            <tr>
+                <td><b>Size</b></td>
+                <td>Returns the total number of elements in the queue.</td>
+                <td>O(1)</td>
+            </tr>
+        </table>
+    
+        <h3>Additional Operations (for specialized queues):</h3>
+        <ul>
+            <li><b>Enqueue Front:</b> Adds an element at the front (only in a <i>deque</i>).</li>
+            <li><b>Dequeue Rear:</b> Removes an element from the rear (only in a <i>deque</i>).</li>
+            <li><b>Priority Dequeue:</b> Removes the highest priority element (only in a <i>priority queue</i>).</li>
+        </ul>
+    </section>
+    
+
+    <section id="python-examples">
+        <h2>Python Code Examples</h2>
+    
+        <h3>1️⃣ Queue Implementation using <code>collections.deque</code></h3>
+        <p>Python's <code>collections.deque</code> provides an optimized way to implement a queue with O(1) time complexity for both enqueue and dequeue operations.</p>
+        <pre><code>
+    from collections import deque
+    
+    # Initialize a queue
+    queue = deque()
+    
+    # Enqueue operation (adding elements)
+    queue.append(10)
+    queue.append(20)
+    queue.append(30)
+    
+    # Dequeue operation (removing from the front)
+    print(queue.popleft())  # Output: 10
+    
+    # Peek at the front element
+    print(queue[0])  # Output: 20
+    
+    # Check if queue is empty
+    print(len(queue) == 0)  # Output: False
+        </code></pre>
+    
+        <h3>2️⃣ Queue Implementation using a List-Based Class</h3>
+        <p>Queues can also be implemented using lists, but <code>pop(0)</code> is inefficient (O(n) complexity).</p>
+        <pre><code>
+    class Queue:
+        def __init__(self):
+            self.queue = []
+    
+        # Enqueue operation
+        def enqueue(self, data):
+            self.queue.append(data)
+    
+        # Dequeue operation
+        def dequeue(self):
+            if not self.is_empty():
+                return self.queue.pop(0)  # O(n) complexity due to shifting
+            return "Queue is empty"
+    
+        # Peek front element
+        def peek(self):
+            if not self.is_empty():
+                return self.queue[0]
+            return "Queue is empty"
+    
+        # Check if queue is empty
+        def is_empty(self):
+            return len(self.queue) == 0
+    
+        # Get queue size
+        def size(self):
+            return len(self.queue)
+    
+    # Example Usage
+    q = Queue()
+    q.enqueue(5)
+    q.enqueue(10)
+    print(q.dequeue())  # Output: 5
+    print(q.peek())     # Output: 10
+        </code></pre>
+    
+        <h3>3️⃣ Queue Implementation using a Linked List</h3>
+        <p>A more efficient approach uses a linked list, where enqueue and dequeue operations have O(1) complexity.</p>
+        <pre><code>
+    # Node class for Linked List
+    class Node:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+    
+    # Queue class using a linked list
+    class LinkedListQueue:
+        def __init__(self):
+            self.front = self.rear = None
+    
+        # Enqueue operation
+        def enqueue(self, data):
+            new_node = Node(data)
+            if self.rear is None:
+                self.front = self.rear = new_node
+            else:
+                self.rear.next = new_node
+                self.rear = new_node
+    
+        # Dequeue operation
+        def dequeue(self):
+            if self.front is None:
+                return "Queue is empty"
+            temp = self.front
+            self.front = self.front.next
+            if self.front is None:
+                self.rear = None
+            return temp.data
+    
+        # Peek front element
+        def peek(self):
+            if self.front is None:
+                return "Queue is empty"
+            return self.front.data
+    
+        # Check if queue is empty
+        def is_empty(self):
+            return self.front is None
+    
+    # Example Usage
+    q = LinkedListQueue()
+    q.enqueue(5)
+    q.enqueue(15)
+    print(q.dequeue())  # Output: 5
+    print(q.peek())     # Output: 15
+        </code></pre>
+    </section>
+    
+
+    <section id="real-world-applications">
+        <h2>Real-World Applications</h2>
+        <p>Queues are widely used in various domains, especially where tasks need to be processed in <strong>First In, First Out (FIFO)</strong> order.</p>
+        
+        <ul>
+            <li><b>📌 CPU Scheduling:</b> Operating systems use queues to manage process scheduling, ensuring fair execution of tasks.</li>
+            <li><b>🖨️ Print Queue:</b> Printers process print jobs in the order they arrive, ensuring fairness.</li>
+            <li><b>📞 Call Center Queues:</b> Customers in a call center wait in a queue to be served based on arrival time.</li>
+            <li><b>📨 Message Queues:</b> Used in <strong>asynchronous programming</strong> (e.g., RabbitMQ, Kafka) to handle real-time message processing.</li>
+            <li><b>🔍 Breadth-First Search (BFS):</b> BFS algorithm in graph traversal uses a queue to explore nodes layer by layer.</li>
+            <li><b>🕹️ Multiplayer Game Matchmaking:</b> Online games queue players and match them based on skill level.</li>
+            <li><b>🚦 Traffic Management:</b> Traffic signals process vehicles in FIFO order at intersections.</li>
+        </ul>
+    </section>
+    
+
+    <section id="comparison">
+        <h2>Queue vs. Stack</h2>
+        <p>Both <strong>Queue</strong> and <strong>Stack</strong> are linear data structures, but they differ in their ordering and usage.</p>
+        
+        <table border="1">
+            <tr>
+                <th>Feature</th>
+                <th>Queue</th>
+                <th>Stack</th>
+            </tr>
+            <tr>
+                <td><b>Order</b></td>
+                <td>FIFO (First In, First Out)</td>
+                <td>LIFO (Last In, First Out)</td>
+            </tr>
+            <tr>
+                <td><b>Insertion</b></td>
+                <td>Elements are added at the <b>rear</b></td>
+                <td>Elements are added at the <b>top</b></td>
+            </tr>
+            <tr>
+                <td><b>Deletion</b></td>
+                <td>Elements are removed from the <b>front</b></td>
+                <td>Elements are removed from the <b>top</b></td>
+            </tr>
+            <tr>
+                <td><b>Access</b></td>
+                <td>First element is accessed first</td>
+                <td>Last inserted element is accessed first</td>
+            </tr>
+            <tr>
+                <td><b>Real-world Examples</b></td>
+                <td>
+                    - Call center queues 📞 <br>
+                    - Process scheduling in OS 🖥️ <br>
+                    - Printer queue 🖨️
+                </td>
+                <td>
+                    - Undo/Redo in text editors 🔄 <br>
+                    - Backtracking in recursion 🔙 <br>
+                    - Browser history ↩️
+                </td>
+            </tr>
+            <tr>
+                <td><b>Time Complexity</b></td>
+                <td>O(1) for Enqueue & Dequeue</td>
+                <td>O(1) for Push & Pop</td>
+            </tr>
+        </table>
+    </section>
+    
+    <section id="advantages-disadvantages">
+        <h2>✅ Advantages & ❌ Disadvantages</h2>
+    
+        <h3>✅ Advantages of Queues:</h3>
+        <ul>
+            <li><b>Efficient FIFO operations:</b> Ensures elements are processed in the correct order.</li>
+            <li><b>Better for real-world use cases:</b> Used in scheduling, buffering, and messaging systems.</li>
+            <li><b>Memory efficient:</b> Only stores necessary elements, unlike arrays with pre-allocated memory.</li>
+            <li><b>Supports multiple types:</b> Variants like Circular Queue, Priority Queue, and Deque provide flexibility.</li>
+        </ul>
+    
+        <h3>❌ Disadvantages of Queues:</h3>
+        <ul>
+            <li><b>Limited access:</b> Only the front and rear elements can be accessed directly; random access is not possible.</li>
+            <li><b>Static array implementation is inefficient:</b> A fixed-size queue wastes space if not fully used.</li>
+            <li><b>Slow middle operations:</b> Searching or modifying elements in the middle takes O(n) time.</li>
+            <li><b>Memory overhead in Linked List Queue:</b> Every node stores extra pointers, increasing memory usage.</li>
+        </ul>
+    </section>
+        
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

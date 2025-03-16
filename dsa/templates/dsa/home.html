@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Learning Hub</title>
+    <link rel="stylesheet" href="/static/dsa/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Welcome to DSA Learning Hub 🚀</h1>
+            <p>Your one-stop destination to master Data Structures and Algorithms with Python!</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="topics-section">
+            <h2>Explore Topics 📚</h2>
+            <div class="topics-grid">
+                <a href="{% url 'topic_view' 'arrays' %}" class="topic-card">
+                    <h3>Arrays</h3>
+                    <p>Learn about arrays and their operations.</p>
+                </a>
+                <a href="{% url 'topic_view' 'strings' %}" class="topic-card">
+                    <h3>Strings</h3>
+                    <p>Master string manipulation techniques.</p>
+                </a>
+                <a href="{% url 'topic_view' 'linked_lists' %}" class="topic-card">
+                    <h3>Linked Lists</h3>
+                    <p>Understand singly, doubly, and circular linked lists.</p>
+                </a>
+                <a href="{% url 'topic_view' 'stacks' %}" class="topic-card">
+                    <h3>Stacks</h3>
+                    <p>Explore the LIFO principle and stack operations.</p>
+                </a>
+                <a href="{% url 'topic_view' 'queues' %}" class="topic-card">
+                    <h3>Queues</h3>
+                    <p>Learn about FIFO and queue implementations.</p>
+                </a>
+                <a href="{% url 'topic_view' 'recursion' %}" class="topic-card">
+                    <h3>Recursion</h3>
+                    <p>Solve problems using recursive techniques.</p>
+                </a>
+                <a href="{% url 'topic_view' 'sorting_algorithms' %}" class="topic-card">
+                    <h3>Sorting Algorithms</h3>
+                    <p>Study Bubble Sort, Quick Sort, Merge Sort, and more.</p>
+                </a>
+                <a href="{% url 'topic_view' 'searching_algorithms' %}" class="topic-card">
+                    <h3>Searching Algorithms</h3>
+                    <p>Master Linear Search, Binary Search, and others.</p>
+                </a>
+                <a href="{% url 'topic_view' 'hashing' %}" class="topic-card">
+                    <h3>Hashing</h3>
+                    <p>Understand hash tables and collision resolution.</p>
+                </a>
+                <a href="{% url 'topic_view' 'trees' %}" class="topic-card">
+                    <h3>Trees</h3>
+                    <p>Learn about binary trees, BSTs, and traversals.</p>
+                </a>
+                <a href="{% url 'topic_view' 'graphs' %}" class="topic-card">
+                    <h3>Graphs</h3>
+                    <p>Explore graph representations and algorithms.</p>
+                </a>
+                <a href="{% url 'topic_view' 'dynamic_programming' %}" class="topic-card">
+                    <h3>Dynamic Programming</h3>
+                    <p>Solve problems using DP and memoization.</p>
+                </a>
+                <a href="{% url 'topic_view' 'greedy_algorithms' %}" class="topic-card">
+                    <h3>Greedy Algorithms</h3>
+                    <p>Optimize problems with greedy choices.</p>
+                </a>
+                <a href="{% url 'topic_view' 'backtracking' %}" class="topic-card">
+                    <h3>Backtracking</h3>
+                    <p>Solve problems like N-Queens and Sudoku.</p>
+                </a>
+                <a href="{% url 'topic_view' 'bit_manipulation' %}" class="topic-card">
+                    <h3>Bit Manipulation</h3>
+                    <p>Master bitwise operations and tricks.</p>
+                </a>
+                <a href="{% url 'topic_view' 'trie' %}" class="topic-card">
+                    <h3>Trie (Prefix Tree)</h3>
+                    <p>Learn about prefix trees and their applications.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

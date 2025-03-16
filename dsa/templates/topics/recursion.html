@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursion in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Recursion in Data Structures & Algorithms</h1>
+        <p>Recursion is a technique where a function calls itself to solve smaller instances of the same problem.</p>
+    </header>
+
+    <section id="introduction">
+        <h2>What is Recursion?</h2>
+        <p>
+            Recursion is a fundamental problem-solving technique where a function calls itself to break a complex problem 
+            into smaller, more manageable subproblems. This process continues until a specific condition, called the 
+            <strong>base case</strong>, is met, stopping further recursive calls.
+        </p>
+    
+        <h3>🔹 Key Components of Recursion</h3>
+        <ul>
+            <li><strong>Base Case:</strong> The condition that stops the recursion and prevents infinite loops.</li>
+            <li><strong>Recursive Case:</strong> The step where the function calls itself with a smaller subproblem.</li>
+        </ul>
+    
+        <h3>🔹 How Recursion Works</h3>
+        <p>
+            Each recursive function follows a basic pattern:
+        </p>
+        <pre><code>
+    def recursive_function(parameters):
+        if base_case_condition:   # Base case (stopping condition)
+            return result
+        else:
+            return recursive_function(smaller_parameters)  # Recursive call with reduced input
+        </code></pre>
+    
+        <h3>🔹 Real-World Analogies</h3>
+        <ul>
+            <li>📚 <strong>Book Indexing:</strong> A book's index references topics, which may further reference subtopics.</li>
+            <li>🎭 <strong>Fractal Patterns:</strong> Snowflakes and tree branches follow self-repeating structures.</li>
+            <li>🔎 <strong>Russian Dolls (Matryoshka):</strong> A smaller doll is placed inside a larger one, similar to recursive layers.</li>
+            <li>📞 <strong>Customer Service Call Routing:</strong> Calls may be forwarded to different departments in a recursive manner.</li>
+        </ul>
+    
+        <h3>🔹 Visual Representation</h3>
+        <p>
+            Consider the classic <strong>factorial</strong> function:
+        </p>
+        <pre><code>
+    factorial(5) = 5 × factorial(4)
+    factorial(4) = 4 × factorial(3)
+    factorial(3) = 3 × factorial(2)
+    factorial(2) = 2 × factorial(1)
+    factorial(1) = 1  # Base Case
+        </code></pre>
+        <p>
+            This recursion unwinds like this:
+        </p>
+        <pre><code>
+    factorial(1) → returns 1
+    factorial(2) → 2 × 1 = 2
+    factorial(3) → 3 × 2 = 6
+    factorial(4) → 4 × 6 = 24
+    factorial(5) → 5 × 24 = 120
+        </code></pre>
+    
+        <p><strong>Recursion Tree:</strong></p>
+        <img src="/static/images/recursion_tree.png" alt="Recursion Tree Representation">
+    
+        <h3>🔹 Why Use Recursion?</h3>
+        <p>Recursion is widely used in various algorithms, including:</p>
+        <ul>
+            <li>📌 <strong>Divide and Conquer Algorithms</strong> – Merge Sort, Quick Sort</li>
+            <li>🔄 <strong>Backtracking Algorithms</strong> – Sudoku Solver, N-Queens Problem</li>
+            <li>🌳 <strong>Tree Traversal</strong> – Preorder, Inorder, Postorder Traversal</li>
+            <li>🔗 <strong>Graph Traversal</strong> – Depth-First Search (DFS)</li>
+            <li>📌 <strong>Dynamic Programming</strong> – Memoization & Recurrence Relations</li>
+        </ul>
+    </section>
+    
+
+    <section id="types">
+        <h2>Types of Recursion</h2>
+        <p>
+            Recursion can be categorized based on how functions call themselves and where the recursive call is placed 
+            in the function. Below are the main types of recursion:
+        </p>
+    
+        <h3>🔹 Classification of Recursion</h3>
+        <ul>
+            <li>
+                <strong>Direct Recursion:</strong> A function calls itself directly.
+                <pre><code>
+    def direct_recursion(n):
+        if n == 0:  # Base case
+            return
+        print(n)
+        direct_recursion(n - 1)  # Recursive call
+                </code></pre>
+            </li>
+    
+            <li>
+                <strong>Indirect Recursion:</strong> A function calls another function, which eventually calls the original function.
+                <pre><code>
+    def functionA(n):
+        if n <= 0:
+            return
+        print(n, "from A")
+        functionB(n - 1)  # Calls functionB
+    
+    def functionB(n):
+        if n <= 0:
+            return
+        print(n, "from B")
+        functionA(n - 2)  # Calls functionA
+                </code></pre>
+            </li>
+    
+            <li>
+                <strong>Tail Recursion:</strong> The recursive call is the last operation performed before returning.
+                <pre><code>
+    def tail_recursion(n, accumulator=1):
+        if n == 0:
+            return accumulator  # Base case returns accumulated value
+        return tail_recursion(n - 1, n * accumulator)  # Recursive call is the last operation
+                </code></pre>
+                <p><strong>Advantage:</strong> Tail recursion can be optimized by the compiler into an iterative process (Tail Call Optimization).</p>
+            </li>
+    
+            <li>
+                <strong>Non-Tail Recursion:</strong> The function performs additional computations after the recursive call.
+                <pre><code>
+    def non_tail_recursion(n):
+        if n == 0:
+            return
+        non_tail_recursion(n - 1)  # Recursive call
+        print(n)  # Computation after the recursive call
+                </code></pre>
+                <p><strong>Disadvantage:</strong> This requires additional stack space as previous calls remain unresolved.</p>
+            </li>
+    
+            <li>
+                <strong>Mutual Recursion:</strong> Two functions call each other recursively.
+                <pre><code>
+    def is_even(n):
+        if n == 0:
+            return True
+        return is_odd(n - 1)  # Calls is_odd
+    
+    def is_odd(n):
+        if n == 0:
+            return False
+        return is_even(n - 1)  # Calls is_even
+    
+    print(is_even(4))  # Output: True
+    print(is_odd(3))   # Output: True
+                </code></pre>
+                <p><strong>Use Case:</strong> Mutual recursion can be useful for problems with alternating conditions.</p>
+            </li>
+        </ul>
+    
+        <h3>🔹 Key Takeaways</h3>
+        <ul>
+            <li>Tail recursion is more memory-efficient and can be optimized by compilers.</li>
+            <li>Non-tail recursion requires extra stack space and may lead to stack overflow for deep recursion.</li>
+            <li>Mutual recursion is useful but can make debugging more complex.</li>
+        </ul>
+    </section>
+    
+
+    <section id="common-problems">
+        <h2>Common Recursive Problems</h2>
+        <p>Recursion is widely used to solve problems that can be broken down into smaller subproblems. Below are some of the most common recursive problems along with their Python implementations.</p>
+    
+        <h3>🔹 1. <strong>Factorial Calculation</strong></h3>
+        <p>The factorial of a number <code>n</code> (denoted as <code>n!</code>) is the product of all positive integers from 1 to <code>n</code>.</p>
+        <pre><code>
+    def factorial(n):
+        if n == 0 or n == 1:  # Base case
+            return 1
+        return n * factorial(n - 1)  # Recursive case
+    
+    print(factorial(5))  # Output: 120
+        </code></pre>
+    
+        <h3>🔹 2. <strong>Fibonacci Sequence</strong></h3>
+        <p>The Fibonacci sequence is defined as:</p>
+        <ul>
+            <li><code>F(0) = 0</code>, <code>F(1) = 1</code></li>
+            <li><code>F(n) = F(n-1) + F(n-2)</code> for <code>n ≥ 2</code></li>
+        </ul>
+        <pre><code>
+    def fibonacci(n):
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        return fibonacci(n - 1) + fibonacci(n - 2)
+    
+    print(fibonacci(6))  # Output: 8
+        </code></pre>
+    
+        <h3>🔹 3. <strong>Tower of Hanoi</strong></h3>
+        <p>The Tower of Hanoi is a mathematical puzzle where three rods and <code>n</code> disks are given, and the goal is to move all disks from the source rod to the destination rod, following these rules:</p>
+        <ul>
+            <li>Only one disk can be moved at a time.</li>
+            <li>A disk can only be placed on a larger disk or an empty rod.</li>
+            <li>All disks must be moved in the fewest possible moves.</li>
+        </ul>
+        <pre><code>
+    def tower_of_hanoi(n, source, auxiliary, destination):
+        if n == 1:
+            print(f"Move disk 1 from {source} to {destination}")
+            return
+        tower_of_hanoi(n - 1, source, destination, auxiliary)
+        print(f"Move disk {n} from {source} to {destination}")
+        tower_of_hanoi(n - 1, auxiliary, source, destination)
+    
+    tower_of_hanoi(3, 'A', 'B', 'C')
+        </code></pre>
+    
+        <h3>🔹 4. <strong>Binary Search (Recursive)</strong></h3>
+        <p>Binary search is an efficient search algorithm that finds an element in a sorted array by repeatedly dividing the search space in half.</p>
+        <pre><code>
+    def binary_search(arr, left, right, target):
+        if left > right:
+            return -1  # Element not found
+    
+        mid = (left + right) // 2
+    
+        if arr[mid] == target:
+            return mid  # Element found at mid index
+        elif arr[mid] < target:
+            return binary_search(arr, mid + 1, right, target)  # Search right half
+        else:
+            return binary_search(arr, left, mid - 1, target)  # Search left half
+    
+    arr = [1, 3, 5, 7, 9, 11]
+    print(binary_search(arr, 0, len(arr) - 1, 7))  # Output: 3
+        </code></pre>
+    
+        <h3>🔹 5. <strong>Tree Traversal (Depth-First Search)</strong></h3>
+        <p>Recursive tree traversal is commonly used in binary trees to visit nodes in different orders:</p>
+        <ul>
+            <li><strong>Inorder (Left, Root, Right)</strong></li>
+            <li><strong>Preorder (Root, Left, Right)</strong></li>
+            <li><strong>Postorder (Left, Right, Root)</strong></li>
+        </ul>
+        <pre><code>
+    class Node:
+        def __init__(self, data):
+            self.data = data
+            self.left = None
+            self.right = None
+    
+    def inorder_traversal(root):
+        if root:
+            inorder_traversal(root.left)
+            print(root.data, end=" ")
+            inorder_traversal(root.right)
+    
+    # Example Tree
+    root = Node(1)
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.left.right = Node(5)
+    
+    inorder_traversal(root)  # Output: 4 2 5 1 3
+        </code></pre>
+    
+        <h3>🔹 Key Takeaways</h3>
+        <ul>
+            <li>Recursion simplifies code but can lead to stack overflow for deep recursion.</li>
+            <li>Optimizing recursive functions with memoization or iterative approaches can improve efficiency.</li>
+            <li>Understanding base cases is crucial for preventing infinite recursion.</li>
+        </ul>
+    </section>
+    
+
+    <section id="python-examples">
+        <h2>Python Code Examples</h2>
+        
+        <p>Below are some classic examples of recursion in Python. These examples illustrate how recursion breaks down complex problems into smaller subproblems.</p>
+    
+        <h3>🔹 1. <strong>Factorial using Recursion</strong></h3>
+        <p>The factorial of a number <code>n</code> is the product of all positive integers from 1 to <code>n</code> (denoted as <code>n!</code>).</p>
+        <ul>
+            <li><strong>Base Case:</strong> If <code>n == 0</code>, return <code>1</code>.</li>
+            <li><strong>Recursive Case:</strong> Multiply <code>n</code> by the factorial of <code>n - 1</code>.</li>
+        </ul>
+        <pre><code>
+    def factorial(n):
+        if n == 0:  # Base case
+            return 1
+        return n * factorial(n - 1)  # Recursive case
+    
+    print(factorial(5))  # Output: 120
+        </code></pre>
+    
+        <h3>🔹 2. <strong>Fibonacci Sequence (Recursive Approach)</strong></h3>
+        <p>The Fibonacci sequence follows the recurrence relation:</p>
+        <ul>
+            <li><code>F(0) = 0</code>, <code>F(1) = 1</code></li>
+            <li><code>F(n) = F(n-1) + F(n-2)</code> for <code>n ≥ 2</code></li>
+        </ul>
+        <p>This method has an exponential time complexity <code>O(2^n)</code> but demonstrates recursion well.</p>
+        <pre><code>
+    def fibonacci(n):
+        if n <= 1:
+            return n  # Base cases: F(0) = 0, F(1) = 1
+        return fibonacci(n - 1) + fibonacci(n - 2)  # Recursive case
+    
+    print(fibonacci(6))  # Output: 8
+        </code></pre>
+    
+        <h3>🔹 3. <strong>Optimized Fibonacci with Memoization</strong></h3>
+        <p>Since the basic recursive Fibonacci function is inefficient, we use memoization to store previously computed results.</p>
+        <pre><code>
+    def fibonacci_memo(n, memo={}):
+        if n in memo:
+            return memo[n]  # Return cached result
+        if n <= 1:
+            return n
+        memo[n] = fibonacci_memo(n - 1, memo) + fibonacci_memo(n - 2, memo)  # Recursive call with memoization
+        return memo[n]
+    
+    print(fibonacci_memo(50))  # Output: 12586269025 (Efficient)
+        </code></pre>
+    
+        <h3>🔹 4. <strong>Tower of Hanoi</strong></h3>
+        <p>The Tower of Hanoi is a puzzle where <code>n</code> disks must be moved from a source rod to a destination rod using an auxiliary rod. The rules are:</p>
+        <ul>
+            <li>Only one disk can be moved at a time.</li>
+            <li>A larger disk cannot be placed on a smaller disk.</li>
+            <li>All disks must be moved in the fewest possible moves.</li>
+        </ul>
+        <p>The number of moves required is <code>2^n - 1</code>.</p>
+        <pre><code>
+    def tower_of_hanoi(n, source, auxiliary, destination):
+        if n == 1:
+            print(f"Move disk 1 from {source} to {destination}")
+            return
+        tower_of_hanoi(n - 1, source, destination, auxiliary)  # Move n-1 disks to auxiliary
+        print(f"Move disk {n} from {source} to {destination}")  # Move nth disk to destination
+        tower_of_hanoi(n - 1, auxiliary, source, destination)  # Move n-1 disks to destination
+    
+    tower_of_hanoi(3, 'A', 'B', 'C')
+        </code></pre>
+    
+        <h3>🔹 5. <strong>Binary Search (Recursive Approach)</strong></h3>
+        <p>Binary search is an efficient way to find an element in a sorted array using recursion. The time complexity is <code>O(log n)</code>.</p>
+        <pre><code>
+    def binary_search(arr, left, right, target):
+        if left > right:
+            return -1  # Element not found
+    
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid  # Found target at index mid
+        elif arr[mid] < target:
+            return binary_search(arr, mid + 1, right, target)  # Search right half
+        else:
+            return binary_search(arr, left, mid - 1, target)  # Search left half
+    
+    arr = [1, 3, 5, 7, 9, 11]
+    print(binary_search(arr, 0, len(arr) - 1, 7))  # Output: 3
+        </code></pre>
+    
+        <h3>🔹 Key Takeaways</h3>
+        <ul>
+            <li><strong>Recursion simplifies problems</strong> by breaking them down into smaller, self-similar subproblems.</li>
+            <li><strong>Base cases are crucial</strong> to prevent infinite recursion.</li>
+            <li><strong>Memoization & optimization</strong> can improve performance in problems like Fibonacci.</li>
+        </ul>
+    </section>
+
+    <section id="comparison">
+        <h2>🔍 Recursion vs. Iteration</h2>
+        <p>Recursion and iteration are both techniques for solving problems by repeating a process. Below is a comparison of their key differences.</p>
+    
+        <table border="1">
+            <tr>
+                <th>Feature</th>
+                <th>Recursion</th>
+                <th>Iteration</th>
+            </tr>
+            <tr>
+                <td><strong>Concept</strong></td>
+                <td>A function calls itself to solve smaller subproblems.</td>
+                <td>Uses loops (<code>for</code>, <code>while</code>) to repeat computations.</td>
+            </tr>
+            <tr>
+                <td><strong>Memory Usage</strong></td>
+                <td>Consumes stack memory for each recursive call.</td>
+                <td>Uses a fixed amount of memory.</td>
+            </tr>
+            <tr>
+                <td><strong>Performance</strong></td>
+                <td>Slower due to function call overhead.</td>
+                <td>Faster since no function calls are needed.</td>
+            </tr>
+            <tr>
+                <td><strong>Ease of Understanding</strong></td>
+                <td>More intuitive for problems like tree traversal and divide & conquer.</td>
+                <td>More natural for loops and sequential tasks.</td>
+            </tr>
+            <tr>
+                <td><strong>Stack Overflow Risk</strong></td>
+                <td>Possible if recursion depth is too high.</td>
+                <td>No risk, as no additional function calls are used.</td>
+            </tr>
+            <tr>
+                <td><strong>Code Simplicity</strong></td>
+                <td>Shorter code for problems with a recursive nature.</td>
+                <td>Requires explicit loops but avoids function call overhead.</td>
+            </tr>
+        </table>
+    
+        <h3>🔹 Example: Factorial Calculation</h3>
+    
+        <h4>✅ Recursive Approach</h4>
+        <pre><code>
+    def factorial_recursive(n):
+        if n == 0:
+            return 1
+        return n * factorial_recursive(n - 1)
+    
+    print(factorial_recursive(5))  # Output: 120
+        </code></pre>
+    
+        <h4>✅ Iterative Approach</h4>
+        <pre><code>
+    def factorial_iterative(n):
+        result = 1
+        for i in range(1, n + 1):
+            result *= i
+        return result
+    
+    print(factorial_iterative(5))  # Output: 120
+        </code></pre>
+    
+        <h3>🔹 Key Takeaways</h3>
+        <ul>
+            <li>Recursion is useful for problems with a naturally recursive structure (e.g., tree traversal, backtracking).</li>
+            <li>Iteration is usually more efficient due to lower memory usage and reduced function call overhead.</li>
+            <li>Some recursive problems can be optimized using <strong>tail recursion</strong> or <strong>memoization</strong> to improve performance.</li>
+        </ul>
+    </section>
+    
+
+    <section id="real-world-applications">
+        <h2>🌍 Real-World Applications of Recursion</h2>
+        <p>Recursion is widely used in various real-world scenarios, from computer science to problem-solving in mathematics and artificial intelligence. Below are some key areas where recursion plays a vital role:</p>
+    
+        <ul>
+            <li>
+                <strong>📂 Tree Traversal:</strong> Recursion is the natural way to traverse hierarchical structures like:
+                <ul>
+                    <li>File systems (e.g., navigating folders and subfolders).</li>
+                    <li>Parsing XML and JSON data.</li>
+                    <li>AI search algorithms (e.g., decision trees in machine learning).</li>
+                </ul>
+            </li>
+    
+            <li>
+                <strong>🌐 Graph Traversal (DFS & BFS):</strong> Depth-First Search (DFS) and Breadth-First Search (BFS) are widely used in:
+                <ul>
+                    <li>Web crawling (e.g., Googlebot crawling web pages).</li>
+                    <li>Route planning in maps (e.g., finding the shortest path in navigation apps).</li>
+                    <li>Analyzing social network connections (e.g., finding mutual friends on Facebook).</li>
+                </ul>
+            </li>
+    
+            <li>
+                <strong>🔢 Dynamic Programming:</strong> Many DP problems are solved using recursion + memoization:
+                <ul>
+                    <li>Finding the longest common subsequence (LCS) in text comparison.</li>
+                    <li>Solving the coin change problem in financial applications.</li>
+                    <li>Optimizing memory allocation and scheduling algorithms.</li>
+                </ul>
+            </li>
+    
+            <li>
+                <strong>♟️ Backtracking:</strong> Recursion is crucial for solving constraint-based problems:
+                <ul>
+                    <li>Solving the <strong>Sudoku puzzle</strong> using recursive trial-and-error.</li>
+                    <li>Placing queens in the <strong>N-Queens problem</strong> without conflicts.</li>
+                    <li>Finding paths in a <strong>maze-solving algorithm</strong>.</li>
+                </ul>
+            </li>
+    
+            <li>
+                <strong>📈 Mathematical Computations:</strong> Many mathematical problems naturally use recursion:
+                <ul>
+                    <li>Computing <strong>factorial</strong> (n!) recursively.</li>
+                    <li>Generating the <strong>Fibonacci sequence</strong> using recursion.</li>
+                    <li>Solving exponentiation problems efficiently (<strong>Exponentiation by squaring</strong>).</li>
+                </ul>
+            </li>
+        </ul>
+    
+        <h3>✅ Example: Recursive DFS for Graph Traversal</h3>
+        <pre><code>
+    def dfs(graph, node, visited):
+        if node not in visited:
+            print(node, end=" ")  # Process node
+            visited.add(node)
+            for neighbor in graph[node]:
+                dfs(graph, neighbor, visited)
+    
+    # Example Graph Representation
+    graph = {
+        'A': ['B', 'C'],
+        'B': ['D', 'E'],
+        'C': ['F'],
+        'D': [],
+        'E': ['F'],
+        'F': []
+    }
+    
+    # Perform DFS
+    dfs(graph, 'A', set())
+    # Output: A B D E F C
+        </code></pre>
+    
+        <h3>🔍 Key Takeaways</h3>
+        <ul>
+            <li>Recursion simplifies solving problems with <strong>hierarchical structures</strong> (e.g., trees, graphs).</li>
+            <li>It is widely used in <strong>AI, web crawling, and complex algorithmic problems</strong>.</li>
+            <li>Although powerful, recursion must be optimized (e.g., using memoization) to prevent excessive memory usage.</li>
+        </ul>
+    </section>
+    
+
+    <section id="advantages-disadvantages">
+        <h2>✅ Advantages & ❌ Disadvantages of Recursion</h2>
+    
+        <h3>✅ Advantages of Recursion</h3>
+        <ul>
+            <li>
+                <strong>📌 Cleaner & simpler code:</strong>  
+                Recursion makes solving problems like <strong>tree traversal</strong> and <strong>graph traversal</strong> more intuitive and readable.  
+                <em>Example:</em> Traversing a binary tree is naturally recursive.
+            </li>
+            <li>
+                <strong>⚡ Solves problems naturally:</strong>  
+                Works well with <strong>divide and conquer</strong> algorithms such as <strong>Merge Sort, Quick Sort, and Binary Search</strong>.  
+                <em>Example:</em> Merge Sort recursively divides the array into halves and merges them back.
+            </li>
+            <li>
+                <strong>🔄 Eliminates loop-based solutions:</strong>  
+                Useful when <strong>iteration is complex or difficult to implement</strong>.  
+                <em>Example:</em> Solving the <strong>Tower of Hanoi</strong> puzzle is easier with recursion than loops.
+            </li>
+            <li>
+                <strong>🎯 Essential for backtracking algorithms:</strong>  
+                Used in problems like <strong>Sudoku Solver, N-Queens, and Maze-solving algorithms</strong>.  
+                <em>Example:</em> A <strong>Sudoku solver</strong> recursively tries different numbers in empty cells.
+            </li>
+        </ul>
+    
+        <h3>❌ Disadvantages of Recursion</h3>
+        <ul>
+            <li>
+                <strong>💾 Higher memory usage:</strong>  
+                Each recursive call <strong>adds a new stack frame</strong> in memory, which can be inefficient for large inputs.  
+                <em>Example:</em> Calculating <strong>Fibonacci numbers</strong> recursively leads to redundant computations.
+            </li>
+            <li>
+                <strong>💣 Can lead to stack overflow:</strong>  
+                Too many recursive calls can exceed <strong>memory limits</strong> (stack overflow error).  
+                <em>Example:</em> If recursion depth is too high, Python throws a <strong>RecursionError</strong>.
+            </li>
+            <li>
+                <strong>🐌 Slower than iteration in some cases:</strong>  
+                Recursion has <strong>function call overhead</strong>, which makes some problems more efficient with loops.  
+                <em>Example:</em> Iterative <strong>factorial and Fibonacci</strong> calculations are faster than naive recursion.
+            </li>
+        </ul>
+    
+        <h3>💡 Optimizing Recursion</h3>
+        <p>Some recursive algorithms can be optimized to avoid excessive memory and redundant calculations:</p>
+        <ul>
+            <li><strong>🔄 Tail Recursion:</strong> A recursive function where the last operation is the recursive call (some languages optimize tail recursion).</li>
+            <li><strong>🧠 Memoization:</strong> Store previously computed results to avoid redundant calls (used in <strong>Fibonacci, Dynamic Programming problems</strong>).</li>
+            <li><strong>📉 Converting to Iteration:</strong> Some recursive algorithms (like Fibonacci) can be rewritten as loops for better efficiency.</li>
+        </ul>
+    </section>
+    
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trie in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Trie (Prefix Tree) in Data Structures</h1>
+        <p>A Trie is a tree-like data structure used for storing strings for efficient prefix matching.</p>
+    </header>
+
+    <section>
+        <h2>What is a Trie?</h2>
+        <p>A Trie is used for fast retrieval of strings with common prefixes.</p>
+        <ul>
+            <li>Each node represents a character.</li>
+            <li>Used in autocomplete and spell-checking systems.</li>
+        </ul>
+        <img src="/static/images/trie.png" alt="Trie Representation">
+    </section>
+
+    <section>
+        <h2>Common Trie Operations</h2>
+        <ol>
+            <li>Insertion.</li>
+            <li>Search.</li>
+            <li>Prefix Matching.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Python Code Examples</h2>
+        <pre><code>
+# Trie Node
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+
+# Trie Implementation
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end_of_word = True
+
+    def search(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_end_of_word
+
+trie = Trie()
+trie.insert("apple")
+print(trie.search("apple"))  # Output: True
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Advantages & Disadvantages</h2>
+        <h3>✅ Advantages:</h3>
+        <ul>
+            <li>Efficient for prefix-based searches.</li>
+        </ul>
+        <h3>❌ Disadvantages:</h3>
+        <ul>
+            <li>High memory usage for large datasets.</li>
+        </ul>
+    </section>
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

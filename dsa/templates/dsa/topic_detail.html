@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic_name }} - DSA Learning Hub</title>
+    <link rel="stylesheet" href="/static/dsa/styles.css">
+</head>
+<body>
+    <header>
+        <h1>{{ topic_name }}</h1>
+        <p>{{ topic_description }}</p>
+    </header>
+
+    <section>
+        <h2>Key Points:</h2>
+        <ul>
+            {% for point in topic_points %}
+                <li>{{ point }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Example:</h2>
+        <pre>
+{{ topic_code }}
+        </pre>
+    </section>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

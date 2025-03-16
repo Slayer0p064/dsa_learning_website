@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit Manipulation in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Bit Manipulation in Data Structures</h1>
+        <p>Bit manipulation involves performing operations directly on binary representations of numbers, often leading to optimized solutions.</p>
+    </header>
+
+    <section>
+        <h2>What is Bit Manipulation?</h2>
+        <p>Bit manipulation is a technique used in programming to perform operations at the bit level. It is commonly used in scenarios requiring high efficiency, such as competitive programming and system-level optimizations.</p>
+        <ul>
+            <li><b>Bitwise AND (&)</b> - Used to clear bits or check if a number is even.</li>
+            <li><b>Bitwise OR (|)</b> - Used to set bits.</li>
+            <li><b>Bitwise XOR (^)</b> - Used for toggling bits and finding unique elements.</li>
+            <li><b>Bitwise NOT (~)</b> - Used for inverting bits.</li>
+            <li><b>Left Shift (<<)</b> - Used for fast multiplication by powers of 2.</li>
+            <li><b>Right Shift (>>)</b> - Used for fast division by powers of 2.</li>
+        </ul>
+        <img src="/static/images/bit_manipulation.png" alt="Bit Manipulation Representation">
+    </section>
+
+    <section>
+        <h2>Common Bit Manipulation Techniques</h2>
+        <ol>
+            <li><b>Checking if a number is even or odd:</b> Using the least significant bit.</li>
+            <li><b>Swapping two numbers without a temporary variable:</b> Using XOR.</li>
+            <li><b>Finding the number of set bits (Hamming Weight):</b> Counting the 1s in binary representation.</li>
+            <li><b>Checking if a number is a power of 2:</b> A number is a power of 2 if it has exactly one set bit.</li>
+            <li><b>Finding the rightmost set bit:</b> Useful for bit masking.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Python Code Examples</h2>
+        <pre><code>
+# Check if a number is even or odd
+def is_even(n):
+    return (n & 1) == 0
+
+print(is_even(4))  # Output: True
+print(is_even(5))  # Output: False
+
+# Swapping two numbers without a temp variable
+def swap(a, b):
+    a = a ^ b
+    b = a ^ b
+    a = a ^ b
+    return a, b
+
+print(swap(3, 5))  # Output: (5, 3)
+
+# Count the number of set bits (Hamming Weight)
+def count_set_bits(n):
+    count = 0
+    while n:
+        count += n & 1
+        n >>= 1
+    return count
+
+print(count_set_bits(9))  # Output: 2 (binary: 1001)
+
+# Check if a number is a power of 2
+def is_power_of_two(n):
+    return n > 0 and (n & (n - 1)) == 0
+
+print(is_power_of_two(8))  # Output: True
+print(is_power_of_two(10)) # Output: False
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Applications of Bit Manipulation</h2>
+        <ul>
+            <li>Optimizing algorithms for competitive programming.</li>
+            <li>Data compression and encryption.</li>
+            <li>Graphics rendering (e.g., bitwise operations in shaders).</li>
+            <li>Networking (e.g., setting or clearing flags in packets).</li>
+            <li>Efficient mathematical computations in embedded systems.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Advantages & Disadvantages</h2>
+        <h3>✅ Advantages:</h3>
+        <ul>
+            <li>Highly efficient for low-level operations.</li>
+            <li>Fast and requires minimal memory.</li>
+            <li>Can simplify certain problems when used correctly.</li>
+        </ul>
+        <h3>❌ Disadvantages:</h3>
+        <ul>
+            <li>Can be difficult to understand and debug.</li>
+            <li>Limited readability, making code harder to maintain.</li>
+        </ul>
+    </section>
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

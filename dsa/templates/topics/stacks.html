@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacks in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Stacks in Data Structures</h1>
+        <p>A stack is a linear data structure that follows the Last In First Out (LIFO) principle, meaning the last element added is the first one to be removed.</p>
+    </header>
+
+    <section>
+        <h2><strong>What is a Stack?</strong></h2>
+        <p>A stack is a collection of elements with two main operations: <b>push</b> (add) and <b>pop</b> (remove). The element added last is the first to be removed, following the <strong>Last In, First Out (LIFO)</strong> principle.</p>
+        <ul>
+            <li><strong>Stacks</strong> are fundamental in various applications, particularly in <strong>algorithms</strong>, <strong>memory management</strong>, and <strong>system architecture</strong>.</li>
+            <li>They are heavily used in <strong>function calls</strong> (in recursion) where each call is placed on the stack and removed once the execution completes. This process is called "<b>stack unwinding</b>" when the function returns.</li>
+            <li>In many <strong>compilers</strong> and <strong>interpreters</strong>, stacks are used to manage the execution flow during the evaluation of mathematical expressions (infix, postfix, prefix notation).</li>
+            <li><strong>Real-world examples</strong> include:
+                <ul>
+                    <li>A <strong>stack of plates</strong> where the last plate placed on top is the first one you pick up.</li>
+                    <li>The <strong>"Back"</strong> button in a <strong>web browser</strong>, which remembers previously visited pages using a stack.</li>
+                    <li>A <strong>stack of books</strong> on a table, where you add new books on top, and when you need one, you take the topmost book.</li>
+                    <li>A <strong>stack of trays</strong> in a cafeteria, where the most recently placed tray is the first one to be used.</li>
+                </ul>
+            </li>
+            <li><strong>Stacks</strong> are commonly used in:
+                <ul>
+                    <li><strong>Expression evaluation</strong> (e.g., converting infix to postfix or evaluating expressions).</li>
+                    <li><strong>Undo mechanisms</strong> in <strong>text editors</strong>, where every action is pushed to the stack, and undoing an action pops it off.</li>
+                    <li><strong>Depth-First Search (DFS)</strong> in <strong>graph traversal algorithms</strong>. In DFS, nodes are pushed to a stack, and the algorithm backtracks by popping nodes from the stack.</li>
+                    <li><strong>Memory management</strong> in <strong>operating systems</strong> (call stacks), where each function call adds a frame to the stack.</li>
+                </ul>
+            </li>
+        </ul>
+        <img src="/static/images/stack.png" alt="Stack Representation">
+    </section>
+    
+    
+
+    <section>
+        <h2>Operations on Stacks</h2>
+        <table border="1" style="width: 100%; table-layout: fixed;">
+            <tr>
+                <th>Operation</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><b>Push</b></td>
+                <td>Add an element to the top of the stack. This operation increases the stack size by 1. Example: <code>stack.append(item)</code> in Python.</td>
+            </tr>
+            <tr>
+                <td><b>Pop</b></td>
+                <td>Remove the top element from the stack. This operation decreases the stack size by 1. If the stack is empty, a "stack underflow" occurs. Example: <code>stack.pop()</code> in Python.</td>
+            </tr>
+            <tr>
+                <td><b>Peek</b></td>
+                <td>View the top element of the stack without removing it. This operation is useful when you want to check the current top element but do not want to modify the stack. Example: <code>stack[-1]</code> in Python.</td>
+            </tr>
+            <tr>
+                <td><b>IsEmpty</b></td>
+                <td>Check if the stack is empty. This operation returns <code>True</code> if the stack contains no elements and <code>False</code> otherwise. Example: <code>len(stack) == 0</code> in Python.</td>
+            </tr>
+            <tr>
+                <td><b>Size</b></td>
+                <td>Return the number of elements currently in the stack. This operation helps track the current stack size. Example: <code>len(stack)</code> in Python.</td>
+            </tr>
+        </table>
+    </section>
+    
+
+    <section>
+        <h2>Python Code Examples</h2>
+    
+        <h3>1️⃣ Basic Stack Operations (Push, Pop)</h3>
+        <pre><code>
+    # Stack implementation using list
+    stack = []
+    
+    # Push operation (add elements to the stack)
+    stack.append(10)  # Stack: [10]
+    stack.append(20)  # Stack: [10, 20]
+    
+    # Pop operation (remove and return the top element)
+    print(stack.pop())  # Output: 20
+    
+    # Stack after pop
+    print(stack)  # Output: [10] (20 was removed)
+        </code></pre>
+    
+        <h3>2️⃣ Peek Operation</h3>
+        <pre><code>
+    # Peek operation (view the top element without removing it)
+    stack = [10, 20, 30]
+    
+    # Access the top element without modifying the stack
+    top_element = stack[-1]
+    print(top_element)  # Output: 30 (top element)
+        </code></pre>
+    
+        <h3>3️⃣ Checking if Stack is Empty</h3>
+        <pre><code>
+    # Check if the stack is empty
+    stack = []
+    
+    if not stack:
+        print("The stack is empty!")  # Output: The stack is empty!
+    else:
+        print("The stack has elements.")
+        </code></pre>
+    
+        <h3>4️⃣ Stack Size</h3>
+        <pre><code>
+    # Get the size of the stack
+    stack = [10, 20, 30]
+    
+    # Use len() function to find the number of elements in the stack
+    print(len(stack))  # Output: 3 (size of the stack)
+        </code></pre>
+            <h3>5️⃣ Custom Stack Implementation</h3>
+            <pre><code>
+        # Stack implementation using a custom class
+        
+        class Stack:
+            def __init__(self):
+                self.stack = []
+        
+            def push(self, item):
+                self.stack.append(item)
+        
+            def pop(self):
+                if not self.is_empty():
+                    return self.stack.pop()
+                else:
+                    print("Stack is empty!")
+        
+            def peek(self):
+                if not self.is_empty():
+                    return self.stack[-1]
+                else:
+                    print("Stack is empty!")
+        
+            def is_empty(self):
+                return len(self.stack) == 0
+        
+            def size(self):
+                return len(self.stack)
+        
+        # Using the custom stack
+        custom_stack = Stack()
+        custom_stack.push(10)
+        custom_stack.push(20)
+        
+        print(custom_stack.pop())  # Output: 20
+        print(custom_stack.peek())  # Output: 10
+        print(custom_stack.size())  # Output: 1
+            </code></pre>
+        
+            <h3>6️⃣ Stack Reversal</h3>
+            <pre><code>
+        # Reversing a stack using recursion
+        
+        def reverse_stack(stack):
+            # Base case: If stack is empty, return
+            if not stack:
+                return
+            # Remove the top element from the stack
+            item = stack.pop()
+            # Recursively reverse the remaining stack
+            reverse_stack(stack)
+            # Insert the removed item at the bottom of the stack
+            insert_at_bottom(stack, item)
+        
+        def insert_at_bottom(stack, item):
+            # If stack is empty, add the item at the bottom
+            if not stack:
+                stack.append(item)
+            else:
+                # Remove the top item, recursively call insert_at_bottom
+                top_item = stack.pop()
+                insert_at_bottom(stack, item)
+                # Push the top item back after inserting the new item at the bottom
+                stack.append(top_item)
+        
+        # Example usage
+        stack_to_reverse = [1, 2, 3, 4, 5]
+        reverse_stack(stack_to_reverse)
+        print(stack_to_reverse)  # Output: [5, 4, 3, 2, 1]
+            </code></pre>
+        
+            <h3>7️⃣ Balancing Parentheses using Stack</h3>
+            <pre><code>
+        # Checking for balanced parentheses using stack
+        
+        def is_balanced(expression):
+            stack = []
+            # Dictionary to match opening and closing parentheses
+            pairs = {')': '(', '}': '{', ']': '['}
+            
+            for char in expression:
+                if char in pairs.values():
+                    stack.append(char)  # If opening parentheses, push onto stack
+                elif char in pairs:
+                    if stack and stack[-1] == pairs[char]:
+                        stack.pop()  # Pop the matching opening parentheses
+                    else:
+                        return False
+            return len(stack) == 0  # If stack is empty, parentheses are balanced
+        
+        # Example usage
+        expression = "{[()()]}"
+        print(is_balanced(expression))  # Output: True
+        expression = "{[(])}"
+        print(is_balanced(expression))  # Output: False
+            </code></pre>
+        
+        </section>
+        
+    
+
+        <section>
+            <h2>Real-World Applications of Stacks</h2>
+            <ul>
+                <li><strong>📖 Undo/Redo Operations:</strong> Many applications (text editors, IDEs) use stacks to handle undo and redo actions. Each action is pushed onto a stack, and popping reverses the action.</li>
+                <li><strong>🧩 Expression Evaluation:</strong> Stacks are used in parsing and evaluating mathematical expressions, such as converting infix expressions to postfix notation and evaluating them. Stacks help manage operators and operands during the process.</li>
+                <li><strong>📜 Recursion:</strong> Stacks are used to store function calls in recursion. Each function call is pushed onto the stack, and the base case pops them off when returning from the function.</li>
+                <li><strong>🔍 Depth-First Search (DFS):</strong> Stacks are integral to DFS algorithms for traversing graphs and trees, where nodes are explored by pushing them onto the stack and popping them to visit the next nodes.</li>
+                <li><strong>🎮 Game Development:</strong> In game development, stacks can be used to manage game states or levels. Each new state is pushed onto the stack, and when transitioning between states (e.g., when going back to the previous level), the current state is popped off.</li>
+                <li><strong>🌐 Web Browsing:</strong> Stacks are used in web browsers to manage the history of visited pages. When you navigate to a new page, the current page is pushed onto the stack. Clicking the "back" button pops the stack to return to the previous page.</li>
+                <li><strong>🔄 Browser History:</strong> Similar to web browsing, stacks can be used to implement the history feature, where pages are stored in the stack, and the "back" functionality is achieved by popping the last visited page.</li>
+                <li><strong>💾 Memory Management:</strong> Stacks are used in memory management for function calls, where local variables and function parameters are stored on the stack. This allows for efficient memory allocation and deallocation during program execution.</li>
+            </ul>
+        </section>
+        
+
+        <section>
+            <h2>Advantages & Disadvantages</h2>
+            <h3>✅ Advantages:</h3>
+            <ul>
+                <li>Simple and efficient for Last-In-First-Out (LIFO) operations.</li>
+                <li>Memory efficient when used in recursive algorithms or for managing data in a linear fashion.</li>
+                <li>Provides an easy way to manage undo/redo functionality in applications like text editors or IDEs.</li>
+                <li>Efficient for problems involving backtracking and parsing, such as evaluating expressions and managing function calls.</li>
+                <li>Helps in managing recursion and storing function call data, enabling a systematic flow of execution.</li>
+            </ul>
+            <h3>❌ Disadvantages:</h3>
+            <ul>
+                <li>Limited access to elements (only the top element can be accessed), making it difficult to retrieve other elements.</li>
+                <li>Fixed size (if using arrays) or can become inefficient (if resizing is needed frequently), potentially leading to memory overhead.</li>
+                <li>Does not allow random access to elements, which can be limiting in certain applications where you need to access multiple elements at once.</li>
+                <li>Performance may degrade in cases of large data volumes, as some stack implementations may not efficiently handle large-scale operations.</li>
+            </ul>
+        </section>
+        
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

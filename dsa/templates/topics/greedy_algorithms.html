@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greedy Algorithms in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Greedy Algorithms in Data Structures</h1>
+        <p>Greedy algorithms make locally optimal choices at each step to find a global optimum.</p>
+    </header>
+
+    <section id="introduction">
+    <h2>What are Greedy Algorithms?</h2>
+    <p>
+        A <strong>Greedy Algorithm</strong> is an algorithmic paradigm that follows the problem-solving approach of making the 
+        best possible choice at each step, hoping to achieve the globally optimal solution. The greedy approach is useful 
+        in optimization problems where making a sequence of locally optimal choices leads to the best overall solution.
+    </p>
+
+    <h3>⭐ Key Characteristics of Greedy Algorithms:</h3>
+    <ul>
+        <li><b>Optimal Substructure:</b> The problem can be broken down into smaller subproblems, and the optimal solution of the entire problem includes optimal solutions of subproblems.</li>
+        <li><b>Greedy Choice Property:</b> At every step, the algorithm makes the best choice without considering future consequences.</li>
+        <li><b>No Backtracking:</b> Unlike dynamic programming, greedy algorithms do not revisit previously solved subproblems.</li>
+        <li><b>Fast and Efficient:</b> In cases where greedy algorithms work, they are typically faster than dynamic programming.</li>
+    </ul>
+
+    <h3>🛠️ How Does a Greedy Algorithm Work?</h3>
+    <p>Greedy algorithms follow these steps:</p>
+    <ol>
+        <li>Sort or arrange the data in a suitable order (if needed).</li>
+        <li>Pick the <b>best possible choice</b> at the current step.</li>
+        <li>Repeat until the problem is solved.</li>
+        <li>Ensure the <b>feasibility</b> of the solution.</li>
+    </ol>
+
+    <h3>🎯 Visual Analogy: The Coin Change Problem</h3>
+    <p>Imagine you are a cashier and need to give a customer change for ₹93 using the least number of coins. 
+       A greedy approach would be to always pick the highest denomination first (₹50, ₹20, ₹20, ₹2, ₹1).</p>
+    <p>While this works in many cases, it may fail in some currency systems. That's why greedy algorithms 
+       need to be carefully analyzed before being applied.</p>
+
+    <h3>🔍 When to Use a Greedy Algorithm?</h3>
+    <p>Greedy algorithms are effective when:</p>
+    <ul>
+        <li>The problem has an <b>optimal substructure</b>, meaning an optimal solution to a problem can be built from optimal solutions to its subproblems.</li>
+        <li>The problem exhibits the <b>greedy choice property</b>, meaning the local best choice leads to the global optimum.</li>
+        <li>Sorting or preprocessing the input helps simplify decision-making.</li>
+    </ul>
+
+    <h3>⚠️ Limitations of Greedy Algorithms</h3>
+    <ul>
+        <li>They do not always produce the most optimal solution.</li>
+        <li>They may get stuck in local optima and fail to find the global optimum.</li>
+        <li>Greedy algorithms don’t always work for problems like the <b>0/1 Knapsack Problem</b> (where dynamic programming is needed).</li>
+    </ul>
+
+    <img src="/static/images/greedy.png" alt="Greedy Algorithm Representation">
+</section>
+
+
+<section id="working">
+    <h2>How Greedy Algorithms Work</h2>
+    <p>
+        Greedy algorithms work by making a sequence of choices, each of which looks best at the moment. 
+        Unlike dynamic programming, they do not backtrack or store past results. The approach follows these steps:
+    </p>
+    <ol>
+        <li><b>Sort</b> or arrange data in a suitable order (if needed).</li>
+        <li>Pick the <b>best possible choice</b> at the current step.</li>
+        <li>Repeat the process until the entire problem is solved.</li>
+        <li>Ensure the <b>feasibility</b> of the solution at each step.</li>
+    </ol>
+
+    <h3>📌 Example: Activity Selection Problem</h3>
+    <p>
+        Suppose we have several activities with start and end times, and we want to schedule the 
+        maximum number of activities that don’t overlap.
+    </p>
+
+    <h4>💡 Steps to Solve Using Greedy Algorithm:</h4>
+    <ol>
+        <li>Sort activities by their ending time.</li>
+        <li>Pick the first activity (the one that ends the earliest).</li>
+        <li>For each remaining activity, pick it only if it starts after the previous selected activity ends.</li>
+        <li>Repeat until no more activities can be selected.</li>
+    </ol>
+
+    <h4>📝 Python Implementation:</h4>
+    <pre><code>
+def activity_selection(activities):
+    activities.sort(key=lambda x: x[1])  # Step 1: Sort by finish time
+    selected = [activities[0]]  # Step 2: Select the first activity
+
+    for i in range(1, len(activities)):
+        if activities[i][0] >= selected[-1][1]:  # Step 3: Pick non-overlapping activities
+            selected.append(activities[i])
+
+    return selected
+
+# Example input (start, end times)
+activities = [(1, 3), (2, 5), (3, 9), (6, 8), (5, 7)]
+print(activity_selection(activities))  
+# Output: [(1, 3), (5, 7), (6, 8)]
+    </code></pre>
+
+    <h4>🎯 Why Greedy Works Here:</h4>
+    <ul>
+        <li>Sorting by finish time ensures we maximize the number of activities.</li>
+        <li>Each selection is made without looking ahead but still leads to an optimal solution.</li>
+        <li>No need for backtracking or storing previous states.</li>
+    </ul>
+
+    <h4>⚠️ When Greedy Fails:</h4>
+    <p>
+        Greedy might not work if making a locally optimal choice leads to a dead end. 
+        For example, in the <b>0/1 Knapsack Problem</b>, greedy fails because selecting items by 
+        value/weight ratio does not always give the optimal answer.
+    </p>
+</section>
+
+
+<section id="examples">
+    <h2>Common Greedy Algorithm Problems</h2>
+    <p>
+        Greedy algorithms are widely used in optimization problems where local choices lead to globally optimal solutions.
+        Below are some classic problems that can be solved using greedy techniques:
+    </p>
+
+    <h3>📌 1. Fractional Knapsack Problem</h3>
+    <p>
+        Given a set of items, each with a weight and value, the goal is to fill a knapsack with the maximum value possible.
+        Unlike the 0/1 knapsack problem, fractions of items can be taken.
+    </p>
+    <pre><code>
+def fractional_knapsack(items, capacity):
+    items.sort(key=lambda x: x[1] / x[0], reverse=True)  # Sort by value-to-weight ratio
+    total_value = 0
+    for weight, value in items:
+        if capacity >= weight:
+            capacity -= weight
+            total_value += value
+        else:
+            total_value += value * (capacity / weight)
+            break
+    return total_value
+
+# Example usage
+items = [(10, 60), (20, 100), (30, 120)]
+print(fractional_knapsack(items, 50))  # Output: 240
+    </code></pre>
+
+    <h3>📌 2. Huffman Coding (Text Compression)</h3>
+    <p>
+        Huffman coding is a greedy algorithm used for data compression, where characters are assigned variable-length codes 
+        based on frequency.
+    </p>
+    <pre><code>
+import heapq
+
+def huffman_coding(freq):
+    heap = [[weight, [char, ""]] for char, weight in freq.items()]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        lo = heapq.heappop(heap)
+        hi = heapq.heappop(heap)
+        for pair in lo[1:]:
+            pair[1] = '0' + pair[1]
+        for pair in hi[1:]:
+            pair[1] = '1' + pair[1]
+        heapq.heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
+
+    return sorted(heapq.heappop(heap)[1:], key=lambda p: (len(p[-1]), p))
+
+freq = {'A': 5, 'B': 9, 'C': 12, 'D': 13, 'E': 16, 'F': 45}
+print(huffman_coding(freq))  # Output: Huffman codes for characters
+    </code></pre>
+
+    <h3>📌 3. Prim's Algorithm (Minimum Spanning Tree)</h3>
+    <p>
+        Used to find the Minimum Spanning Tree (MST) in a weighted, connected graph. This minimizes the total cost of connecting all nodes.
+    </p>
+    <pre><code>
+import heapq
+
+def prim(graph, start):
+    mst = []
+    visited = set()
+    heap = [(0, start, None)]  # (cost, node, parent)
+    
+    while heap:
+        cost, node, parent = heapq.heappop(heap)
+        if node not in visited:
+            visited.add(node)
+            if parent is not None:
+                mst.append((parent, node, cost))
+            for neighbor, weight in graph[node]:
+                if neighbor not in visited:
+                    heapq.heappush(heap, (weight, neighbor, node))
+    
+    return mst
+
+# Example Graph
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('A', 1), ('C', 1), ('D', 4)],
+    'C': [('A', 3), ('B', 1), ('D', 2)],
+    'D': [('B', 4), ('C', 2)]
+}
+print(prim(graph, 'A'))  
+    </code></pre>
+
+    <h3>📌 4. Dijkstra’s Algorithm (Shortest Path)</h3>
+    <p>
+        Dijkstra’s algorithm finds the shortest path from a single source node to all other nodes in a weighted graph.
+    </p>
+    <pre><code>
+import heapq
+
+def dijkstra(graph, start):
+    min_heap = [(0, start)]
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    
+    while min_heap:
+        current_distance, current_node = heapq.heappop(min_heap)
+        if current_distance > distances[current_node]:
+            continue
+        for neighbor, weight in graph[current_node]:
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(min_heap, (distance, neighbor))
+    
+    return distances
+
+# Example Graph
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('A', 1), ('C', 2), ('D', 5)],
+    'C': [('A', 4), ('B', 2), ('D', 1)],
+    'D': [('B', 5), ('C', 1)]
+}
+print(dijkstra(graph, 'A'))  
+    </code></pre>
+
+    <h3>📌 5. Activity Selection Problem</h3>
+    <p>
+        Given a list of activities with start and end times, select the maximum number of non-overlapping activities.
+    </p>
+    <pre><code>
+def activity_selection(activities):
+    activities.sort(key=lambda x: x[1])  # Sort by finish time
+    selected = [activities[0]]
+
+    for i in range(1, len(activities)):
+        if activities[i][0] >= selected[-1][1]:  # Pick non-overlapping activities
+            selected.append(activities[i])
+
+    return selected
+
+activities = [(1, 3), (2, 5), (3, 9), (6, 8), (5, 7)]
+print(activity_selection(activities))  
+# Output: [(1, 3), (5, 7), (6, 8)]
+    </code></pre>
+
+</section>
+
+
+<section id="code-examples">
+    <h2>Python Code Examples</h2>
+
+    <h3>1️⃣ Fractional Knapsack Problem</h3>
+    <p>
+        Given a set of items, each with a weight and a value, determine the maximum value that can be carried 
+        in a knapsack of limited capacity. Unlike the 0/1 Knapsack problem, we can take fractional parts of items.
+    </p>
+    <pre><code>
+def fractional_knapsack(items, capacity):
+    items.sort(key=lambda x: x[1] / x[0], reverse=True)  # Sort by value-to-weight ratio
+    total_value = 0
+
+    for weight, value in items:
+        if capacity >= weight:
+            capacity -= weight
+            total_value += value
+        else:
+            total_value += value * (capacity / weight)  # Take fractional part
+            break
+    return total_value
+
+# Example Usage
+items = [(10, 60), (20, 100), (30, 120)]
+print(fractional_knapsack(items, 50))  # Output: 240.0
+    </code></pre>
+
+    <h3>2️⃣ Huffman Coding Algorithm</h3>
+    <p>
+        Huffman coding is a lossless data compression algorithm that assigns variable-length binary codes 
+        to characters based on their frequencies.
+    </p>
+    <pre><code>
+import heapq
+
+class Node:
+    def __init__(self, char, freq):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+
+    def __lt__(self, other):
+        return self.freq < other.freq
+
+def huffman_encoding(data):
+    freq_map = {}
+    for char in data:
+        freq_map[char] = freq_map.get(char, 0) + 1
+
+    heap = [Node(char, freq) for char, freq in freq_map.items()]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+        merged = Node(None, left.freq + right.freq)
+        merged.left = left
+        merged.right = right
+        heapq.heappush(heap, merged)
+
+    return heap[0]  # Root of Huffman Tree
+    </code></pre>
+
+    <h3>3️⃣ Prim's Algorithm (Minimum Spanning Tree)</h3>
+    <p>
+        Prim's algorithm finds the Minimum Spanning Tree (MST) of a weighted, undirected graph, minimizing 
+        the total cost of connecting all nodes.
+    </p>
+    <pre><code>
+import heapq
+
+def prim(graph, start):
+    mst = []
+    visited = set()
+    heap = [(0, start, None)]  # (cost, node, parent)
+    
+    while heap:
+        cost, node, parent = heapq.heappop(heap)
+        if node not in visited:
+            visited.add(node)
+            if parent is not None:
+                mst.append((parent, node, cost))
+            for neighbor, weight in graph[node]:
+                if neighbor not in visited:
+                    heapq.heappush(heap, (weight, neighbor, node))
+    
+    return mst
+
+# Example Graph
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('A', 1), ('C', 1), ('D', 4)],
+    'C': [('A', 3), ('B', 1), ('D', 2)],
+    'D': [('B', 4), ('C', 2)]
+}
+print(prim(graph, 'A'))  
+    </code></pre>
+
+    <h3>4️⃣ Dijkstra’s Algorithm (Shortest Path)</h3>
+    <p>
+        Dijkstra’s algorithm finds the shortest path from a single source node to all other nodes in a weighted graph.
+    </p>
+    <pre><code>
+import heapq
+
+def dijkstra(graph, start):
+    min_heap = [(0, start)]
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    
+    while min_heap:
+        current_distance, current_node = heapq.heappop(min_heap)
+        if current_distance > distances[current_node]:
+            continue
+        for neighbor, weight in graph[current_node]:
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(min_heap, (distance, neighbor))
+    
+    return distances
+
+# Example Graph
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('A', 1), ('C', 2), ('D', 5)],
+    'C': [('A', 4), ('B', 2), ('D', 1)],
+    'D': [('B', 5), ('C', 1)]
+}
+print(dijkstra(graph, 'A'))  
+    </code></pre>
+
+    <h3>5️⃣ Activity Selection Problem</h3>
+    <p>
+        Given a list of activities with start and end times, the goal is to select the maximum number of 
+        non-overlapping activities.
+    </p>
+    <pre><code>
+def activity_selection(activities):
+    activities.sort(key=lambda x: x[1])  # Sort by finish time
+    selected = [activities[0]]
+
+    for i in range(1, len(activities)):
+        if activities[i][0] >= selected[-1][1]:  # Pick non-overlapping activities
+            selected.append(activities[i])
+
+    return selected
+
+activities = [(1, 3), (2, 5), (3, 9), (6, 8), (5, 7)]
+print(activity_selection(activities))  
+# Output: [(1, 3), (5, 7), (6, 8)]
+    </code></pre>
+
+</section>
+
+
+<section id="real-world">
+    <h2>Real-World Applications</h2>
+    <p>Greedy algorithms are widely used in various fields due to their efficiency. Here are some real-world applications:</p>
+    <ul>
+        <li><b>🚗 Network Routing:</b> Dijkstra’s Algorithm helps find the shortest path in Google Maps, GPS navigation, and computer networks.</li>
+        <li><b>📁 File Compression:</b> Huffman Encoding is a fundamental technique used in ZIP, JPEG, PNG, and MP3 compression to reduce file sizes efficiently.</li>
+        <li><b>💻 CPU Scheduling:</b> The Activity Selection problem is applied in operating systems for task scheduling to maximize CPU utilization.</li>
+        <li><b>🌍 Spanning Trees:</b> Prim’s Algorithm is used in network design and circuit connections to optimize cable usage while maintaining full connectivity.</li>
+        <li><b>📡 Wireless Network Design:</b> Greedy algorithms help place cell towers efficiently to maximize coverage while minimizing cost.</li>
+        <li><b>📊 Stock Market Trading:</b> Greedy strategies are used in financial algorithms to make real-time stock purchase decisions.</li>
+    </ul>
+</section>
+
+
+<section id="complexity">
+    <h2>Time & Space Complexity</h2>
+    <p>
+        The efficiency of a greedy algorithm depends on the number of operations performed and the extra space used. Below is an analysis of different greedy algorithms:
+    </p>
+
+    <table border="1">
+        <tr>
+            <th>Algorithm</th>
+            <th>Time Complexity</th>
+            <th>Space Complexity</th>
+            <th>Explanation</th>
+        </tr>
+        <tr>
+            <td>Fractional Knapsack</td>
+            <td>O(N log N)</td>
+            <td>O(1)</td>
+            <td>Sorting the items takes O(N log N), and iterating over them takes O(N). No extra space is used.</td>
+        </tr>
+        <tr>
+            <td>Huffman Coding</td>
+            <td>O(N log N)</td>
+            <td>O(N)</td>
+            <td>Building the Huffman tree requires a priority queue (heap) with O(N log N) operations. The tree itself takes O(N) space.</td>
+        </tr>
+        <tr>
+            <td>Dijkstra’s Algorithm</td>
+            <td>O((V+E) log V)</td>
+            <td>O(V)</td>
+            <td>Uses a priority queue (heap) for selecting the shortest path in O(log V) time, iterating over V nodes and E edges.</td>
+        </tr>
+        <tr>
+            <td>Prim’s Algorithm</td>
+            <td>O(E log V)</td>
+            <td>O(V + E)</td>
+            <td>Similar to Dijkstra’s but used for finding Minimum Spanning Tree (MST). Uses a priority queue and an adjacency list.</td>
+        </tr>
+    </table>
+
+    <h3>Key Complexity Factors</h3>
+    <ul>
+        <li><b>Sorting Operations:</b> Many greedy algorithms (like Fractional Knapsack) rely on sorting, making their complexity O(N log N).</li>
+        <li><b>Priority Queues:</b> Graph algorithms like Dijkstra’s and Prim’s use heaps, which contribute to the logarithmic complexity.</li>
+        <li><b>Graph Representation:</b> Space complexity in graph problems depends on whether an adjacency matrix (O(V²)) or adjacency list (O(V + E)) is used.</li>
+    </ul>
+</section>
+
+
+<section id="advantages-disadvantages">
+    <h2>Advantages & Disadvantages</h2>
+
+    <h3>✅ Advantages of Greedy Algorithms:</h3>
+    <ul>
+        <li><b>Simple & Easy to Implement:</b> Greedy algorithms require fewer computations and straightforward logic.</li>
+        <li><b>Efficient for Certain Problems:</b> Works well when the greedy-choice property and optimal substructure are met.</li>
+        <li><b>Faster than Dynamic Programming:</b> Since greedy algorithms don’t rely on recursion or storing previous results, they often run faster.</li>
+        <li><b>Lower Memory Usage:</b> Unlike dynamic programming, which requires a table or cache, greedy algorithms generally use constant or minimal space.</li>
+        <li><b>Widely Used in Real-World Applications:</b> Many practical applications (e.g., network routing, scheduling) rely on greedy methods for quick decision-making.</li>
+    </ul>
+
+    <h3>❌ Disadvantages of Greedy Algorithms:</h3>
+    <ul>
+        <li><b>May Not Always Provide an Optimal Solution:</b> Some problems require a more global approach, which greedy algorithms lack.</li>
+        <li><b>Fails When Future Choices Matter:</b> If the best immediate choice leads to a bad outcome later, the greedy approach fails.</li>
+        <li><b>Not Suitable for All Optimization Problems:</b> Problems like the "0/1 Knapsack" require dynamic programming instead.</li>
+        <li><b>Requires Careful Problem Analysis:</b> Before using a greedy algorithm, one must verify that the problem satisfies the greedy-choice property and optimal substructure.</li>
+    </ul>
+
+    <h3>📌 Example of Failure:</h3>
+    <p>
+        Consider the <b>0/1 Knapsack Problem</b>. The greedy approach fails because selecting the highest value-to-weight ratio may not lead to the best solution.
+        In contrast, <b>dynamic programming</b> ensures an optimal solution by considering all possibilities.
+    </p>
+</section>
+
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

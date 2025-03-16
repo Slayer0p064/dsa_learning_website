@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Lists in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Linked Lists in Data Structures</h1>
+        <p>A linked list is a linear data structure where elements (nodes) are connected using pointers.</p>
+    </header>
+
+    <section id="introduction">
+        <h2>What is a Linked List?</h2>
+        <p>A linked list is a linear data structure where elements are stored in individual objects called <b>nodes</b>. Each node consists of:</p>
+        <ul>
+            <li><b>Data:</b> The actual value stored in the node.</li>
+            <li><b>Pointer (or Link):</b> A reference to the next node in the sequence.</li>
+        </ul>
+        <p>Unlike arrays, linked lists do not require contiguous memory allocation, making them efficient for dynamic memory management. They are especially useful when frequent insertions and deletions are required.</p>
+    
+        <h3>Why Use a Linked List?</h3>
+        <p>Linked lists offer several advantages over traditional arrays:</p>
+        <ul>
+            <li>They can dynamically grow or shrink in size without memory reallocation.</li>
+            <li>Efficient insertion and deletion operations (O(1) time complexity) compared to arrays (O(n) in worst cases).</li>
+            <li>No need to define an initial size, reducing memory wastage.</li>
+        </ul>
+    
+        <h3>Types of Linked Lists</h3>
+        <p>Different variations of linked lists are used in different applications:</p>
+        <ul>
+            <li><b>Singly Linked List:</b> Each node contains data and a pointer to the next node. It allows one-way traversal.</li>
+            <li><b>Doubly Linked List:</b> Each node contains two pointers—one pointing to the next node and another pointing to the previous node—allowing traversal in both directions.</li>
+            <li><b>Circular Linked List:</b> The last node in the list connects back to the first node, forming a circular structure.</li>
+        </ul>
+    
+        <h3>Comparison of Linked List Types</h3>
+        <table border="1">
+            <tr>
+                <th>Type</th>
+                <th>Structure</th>
+                <th>Advantages</th>
+                <th>Disadvantages</th>
+            </tr>
+            <tr>
+                <td>Singly Linked List</td>
+                <td>Each node has a pointer to the next node.</td>
+                <td>Uses less memory, simple to implement.</td>
+                <td>Cannot traverse backward.</td>
+            </tr>
+            <tr>
+                <td>Doubly Linked List</td>
+                <td>Each node has pointers to both previous and next nodes.</td>
+                <td>Supports two-way traversal, easier deletion.</td>
+                <td>Requires extra memory for an additional pointer.</td>
+            </tr>
+            <tr>
+                <td>Circular Linked List</td>
+                <td>The last node points back to the first node.</td>
+                <td>No NULL pointers, can be traversed indefinitely.</td>
+                <td>More complex operations, risk of infinite loops.</td>
+            </tr>
+        </table>
+    
+        <h3>Real-World Applications</h3>
+        <p>Linked lists are widely used in various applications, including:</p>
+        <ul>
+            <li><b>Dynamic Memory Allocation:</b> Used in operating systems to manage free memory blocks efficiently.</li>
+            <li><b>Undo/Redo Functionality:</b> Many applications like text editors and IDEs use linked lists to store changes.</li>
+            <li><b>Music Playlists:</b> Circular linked lists are used in music players to repeat songs in a loop.</li>
+            <li><b>Graph Implementations:</b> Adjacency lists in graph algorithms use linked lists to store connections.</li>
+        </ul>
+    
+        <h3>Visual Representation</h3>
+        <p>The following diagram illustrates the structure of a singly linked list:</p>
+        <img src="/static/images/linked_list.png" alt="Linked List Representation">
+    </section>
+    
+
+    <section id="operations">
+        <h2>Operations on Linked Lists</h2>
+        <p>Linked lists support several operations, including insertion, deletion, and traversal. Unlike arrays, linked lists allow efficient insertions and deletions at any position without requiring memory reallocation.</p>
+    
+        <h3>Basic Operations</h3>
+        <table border="1">
+            <tr>
+                <th>Operation</th>
+                <th>Description</th>
+                <th>Time Complexity</th>
+            </tr>
+            <tr>
+                <td>Insertion (at head)</td>
+                <td>Adds a new node at the beginning.</td>
+                <td>O(1)</td>
+            </tr>
+            <tr>
+                <td>Insertion (at tail)</td>
+                <td>Adds a new node at the end.</td>
+                <td>O(n) (Singly) / O(1) (Doubly)</td>
+            </tr>
+            <tr>
+                <td>Insertion (at a position)</td>
+                <td>Inserts a node at a specific index.</td>
+                <td>O(n)</td>
+            </tr>
+            <tr>
+                <td>Deletion (at head)</td>
+                <td>Removes the first node.</td>
+                <td>O(1)</td>
+            </tr>
+            <tr>
+                <td>Deletion (at tail)</td>
+                <td>Removes the last node.</td>
+                <td>O(n) (Singly) / O(1) (Doubly)</td>
+            </tr>
+            <tr>
+                <td>Deletion (at a position)</td>
+                <td>Deletes a node at a given index.</td>
+                <td>O(n)</td>
+            </tr>
+            <tr>
+                <td>Search</td>
+                <td>Finds a node with a specific value.</td>
+                <td>O(n)</td>
+            </tr>
+            <tr>
+                <td>Traversal</td>
+                <td>Goes through the list and prints values.</td>
+                <td>O(n)</td>
+            </tr>
+        </table>
+    
+        <h3>1️⃣ Inserting a Node at the Head</h3>
+        <p>The easiest and fastest insertion operation in a linked list is at the head.</p>
+        <pre><code>
+    class Node:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+    
+    class LinkedList:
+        def __init__(self):
+            self.head = None
+    
+        def insert_at_head(self, data):
+            new_node = Node(data)
+            new_node.next = self.head
+            self.head = new_node  # New node becomes the head
+    
+    # Example usage:
+    ll = LinkedList()
+    ll.insert_at_head(10)
+    ll.insert_at_head(20)  # Linked List: 20 -> 10
+        </code></pre>
+    
+        <h3>2️⃣ Inserting a Node at the Tail</h3>
+        <p>Adding a node at the end requires traversing the entire list to find the last node.</p>
+        <pre><code>
+    def insert_at_tail(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        temp = self.head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+    
+    # Adding to the end:
+    ll.insert_at_tail(30)  # Linked List: 20 -> 10 -> 30
+        </code></pre>
+    
+        <h3>3️⃣ Deleting a Node from the Head</h3>
+        <p>Deleting the first node is an O(1) operation since it only requires updating the head pointer.</p>
+        <pre><code>
+    def delete_head(self):
+        if self.head:
+            self.head = self.head.next  # Move head pointer to the next node
+    
+    # Deleting first node:
+    ll.delete_head()  # Removes 20, Linked List: 10 -> 30
+        </code></pre>
+    
+        <h3>4️⃣ Searching for a Node</h3>
+        <p>Since a linked list is not indexed, searching requires traversal.</p>
+        <pre><code>
+    def search(self, key):
+        temp = self.head
+        while temp:
+            if temp.data == key:
+                return True
+            temp = temp.next
+        return False
+    
+    # Searching in the list:
+    print(ll.search(10))  # Output: True
+        </code></pre>
+    
+        <h3>5️⃣ Traversing a Linked List</h3>
+        <p>Traversal means visiting each node and printing its value.</p>
+        <pre><code>
+    def traverse(self):
+        temp = self.head
+        while temp:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
+    
+    # Display the linked list:
+    ll.traverse()  # Output: 10 -> 30 -> None
+        </code></pre>
+    
+        <h3>🚀 Key Takeaways</h3>
+        <ul>
+            <li><b>Insertion at Head:</b> Fastest (O(1)).</li>
+            <li><b>Insertion at Tail:</b> O(n) for singly, O(1) for doubly linked list.</li>
+            <li><b>Deletion at Head:</b> O(1) and very efficient.</li>
+            <li><b>Searching & Traversing:</b> Always O(n) due to linear traversal.</li>
+        </ul>
+    
+    </section>
+    
+
+    <section id="python-examples">
+        <h2>Python Code Examples</h2>
+    
+        <h3>1️⃣ Singly Linked List Implementation</h3>
+        <p>A singly linked list contains nodes where each node has a value and a pointer to the next node.</p>
+        <pre><code>
+    # Node class
+    class Node:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+    
+    # Linked List class
+    class LinkedList:
+        def __init__(self):
+            self.head = None
+    
+        # Insert at head
+        def insert_at_head(self, data):
+            new_node = Node(data)
+            new_node.next = self.head
+            self.head = new_node
+    
+        # Insert at tail
+        def insert_at_tail(self, data):
+            new_node = Node(data)
+            if not self.head:
+                self.head = new_node
+                return
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+    
+        # Delete a node by value
+        def delete_node(self, key):
+            temp = self.head
+            if temp and temp.data == key:
+                self.head = temp.next
+                temp = None
+                return
+            prev = None
+            while temp and temp.data != key:
+                prev = temp
+                temp = temp.next
+            if temp:
+                prev.next = temp.next
+                temp = None
+    
+        # Search for a value
+        def search(self, key):
+            temp = self.head
+            while temp:
+                if temp.data == key:
+                    return True
+                temp = temp.next
+            return False
+    
+        # Print linked list
+        def display(self):
+            temp = self.head
+            while temp:
+                print(temp.data, end=" -> ")
+                temp = temp.next
+            print("None")
+    
+    # Example usage
+    ll = LinkedList()
+    ll.insert_at_head(10)
+    ll.insert_at_head(20)
+    ll.insert_at_tail(30)
+    ll.display()  # Output: 20 -> 10 -> 30 -> None
+    print(ll.search(10))  # Output: True
+    ll.delete_node(10)
+    ll.display()  # Output: 20 -> 30 -> None
+        </code></pre>
+    
+        <h3>2️⃣ Doubly Linked List Implementation</h3>
+        <p>A doubly linked list contains nodes where each node has pointers to both the previous and next node.</p>
+        <pre><code>
+    class DNode:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+            self.prev = None
+    
+    class DoublyLinkedList:
+        def __init__(self):
+            self.head = None
+    
+        # Insert at head
+        def insert_at_head(self, data):
+            new_node = DNode(data)
+            new_node.next = self.head
+            if self.head:
+                self.head.prev = new_node
+            self.head = new_node
+    
+        # Insert at tail
+        def insert_at_tail(self, data):
+            new_node = DNode(data)
+            if not self.head:
+                self.head = new_node
+                return
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+            new_node.prev = temp
+    
+        # Delete a node by value
+        def delete_node(self, key):
+            temp = self.head
+            while temp and temp.data != key:
+                temp = temp.next
+            if temp is None:
+                return
+            if temp.prev:
+                temp.prev.next = temp.next
+            if temp.next:
+                temp.next.prev = temp.prev
+            if temp == self.head:
+                self.head = temp.next
+            temp = None
+    
+        # Print doubly linked list
+        def display(self):
+            temp = self.head
+            while temp:
+                print(temp.data, end=" <-> ")
+                temp = temp.next
+            print("None")
+    
+    # Example usage
+    dll = DoublyLinkedList()
+    dll.insert_at_head(10)
+    dll.insert_at_head(20)
+    dll.insert_at_tail(30)
+    dll.display()  # Output: 20 <-> 10 <-> 30 <-> None
+    dll.delete_node(10)
+    dll.display()  # Output: 20 <-> 30 <-> None
+        </code></pre>
+    
+        <h3>3️⃣ Circular Linked List Implementation</h3>
+        <p>A circular linked list is a variation where the last node points back to the first node.</p>
+        <pre><code>
+    class CNode:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+    
+    class CircularLinkedList:
+        def __init__(self):
+            self.head = None
+    
+        # Insert at tail
+        def insert(self, data):
+            new_node = CNode(data)
+            if not self.head:
+                self.head = new_node
+                new_node.next = self.head
+                return
+            temp = self.head
+            while temp.next != self.head:
+                temp = temp.next
+            temp.next = new_node
+            new_node.next = self.head
+    
+        # Display circular linked list
+        def display(self):
+            if not self.head:
+                return
+            temp = self.head
+            while True:
+                print(temp.data, end=" -> ")
+                temp = temp.next
+                if temp == self.head:
+                    break
+            print("(Back to Head)")
+    
+    # Example usage
+    cll = CircularLinkedList()
+    cll.insert(10)
+    cll.insert(20)
+    cll.insert(30)
+    cll.display()  # Output: 10 -> 20 -> 30 -> (Back to Head)
+        </code></pre>
+    
+        <h3>🚀 Key Takeaways</h3>
+        <ul>
+            <li>✔ <strong>Singly Linked List:</strong> One-directional, simple, efficient for insertions.</li>
+            <li>✔ <strong>Doubly Linked List:</strong> Two-directional, allows backward traversal, more memory overhead.</li>
+            <li>✔ <strong>Circular Linked List:</strong> No NULL end, useful in circular queues and buffering systems.</li>
+        </ul>
+    </section>
+    
+
+    <section id="real-world-applications">
+        <h2>🌍 Real-World Applications of Linked Lists</h2>
+        <p>Linked lists are widely used in various fields due to their flexibility and dynamic memory allocation.</p>
+        
+        <ul>
+            <li><b>📌 Memory Management:</b> 
+                <br>Dynamic memory allocation systems use linked lists to manage free and allocated memory blocks efficiently.
+            </li>
+            
+            <li><b>✍ Undo & Redo Operations:</b> 
+                <br>Text editors (like Notepad, MS Word) use <strong>doubly linked lists</strong> to implement the undo/redo feature, allowing users to move backward and forward through actions.
+            </li>
+    
+            <li><b>🎵 Music & Video Playlists:</b> 
+                <br>Music players and streaming apps (like Spotify, VLC) use <strong>circular linked lists</strong> to navigate between tracks seamlessly.
+            </li>
+    
+            <li><b>🌐 Web Browsers:</b> 
+                <br>Web browsers store browsing history in a <strong>doubly linked list</strong>, enabling the "Back" and "Forward" buttons to navigate pages efficiently.
+            </li>
+    
+            <li><b>📞 Call Logs in Mobile Phones:</b> 
+                <br>Phone call history is maintained using <strong>circular linked lists</strong>, ensuring old records are overwritten when the log reaches its limit.
+            </li>
+    
+            <li><b>🛠 Operating System Task Scheduling:</b> 
+                <br>Modern OS schedulers use <strong>circular linked lists</strong> to manage process scheduling, allowing fair CPU time distribution (Round-Robin Scheduling).
+            </li>
+    
+            <li><b>📑 LRU (Least Recently Used) Cache:</b> 
+                <br>Linked lists are used to implement caching mechanisms in databases and operating systems, ensuring efficient memory usage.
+            </li>
+    
+            <li><b>📡 Graph Representations:</b> 
+                <br>Adjacency lists in graph algorithms use linked lists to efficiently represent connections in networks, social media, and maps.
+            </li>
+    
+            <li><b>📬 Blockchain Data Structures:</b> 
+                <br>Blockchain technology uses linked structures where each block contains a reference (hash) to the previous block.
+            </li>
+    
+            <li><b>🚄 Railway/Metro System Navigation:</b> 
+                <br>Train route navigation systems use linked lists to determine routes, stops, and alternative paths dynamically.
+            </li>
+        </ul>
+    </section>
+    
+
+    <section id="comparison">
+        <h2>🔄 Linked List vs. Arrays</h2>
+        <p>Both linked lists and arrays are fundamental data structures, but they have distinct advantages and trade-offs. The table below compares them:</p>
+    
+        <table border="1">
+            <tr>
+                <th>Feature</th>
+                <th>📌 Linked List</th>
+                <th>📌 Array</th>
+            </tr>
+            <tr>
+                <td><b>Memory Allocation</b></td>
+                <td>Dynamic (Can grow or shrink as needed)</td>
+                <td>Static (Fixed size, needs resizing if exceeded)</td>
+            </tr>
+            <tr>
+                <td><b>Insertion/Deletion</b></td>
+                <td>O(1) at head / O(n) at a specific position</td>
+                <td>O(n) (Shifting required in most cases)</td>
+            </tr>
+            <tr>
+                <td><b>Random Access</b></td>
+                <td>❌ Not Allowed (Sequential access only)</td>
+                <td>✅ Allowed (O(1) access using index)</td>
+            </tr>
+            <tr>
+                <td><b>Memory Usage</b></td>
+                <td>Extra memory for pointers (higher overhead)</td>
+                <td>Uses only required memory (no extra pointers)</td>
+            </tr>
+            <tr>
+                <td><b>Traversal Speed</b></td>
+                <td>Slower (Need to follow pointers)</td>
+                <td>Faster (Direct access using index)</td>
+            </tr>
+            <tr>
+                <td><b>Flexibility</b></td>
+                <td>Highly flexible (Can easily grow and shrink)</td>
+                <td>Less flexible (Size must be defined in advance)</td>
+            </tr>
+            <tr>
+                <td><b>Cache Friendliness</b></td>
+                <td>Poor (Nodes stored at scattered locations)</td>
+                <td>High (Elements stored in contiguous memory)</td>
+            </tr>
+            <tr>
+                <td><b>Implementation Complexity</b></td>
+                <td>More complex (Pointers and memory management required)</td>
+                <td>Simple (Direct indexing, no pointers needed)</td>
+            </tr>
+            <tr>
+                <td><b>Use Case</b></td>
+                <td>Efficient insertions/deletions (Dynamic data storage)</td>
+                <td>Fast lookups and direct access (Static data storage)</td>
+            </tr>
+        </table>
+    </section>
+    
+
+    <section id="advantages-disadvantages">
+        <h2>✅ Advantages & ❌ Disadvantages</h2>
+    
+        <h3>✅ Advantages of Linked Lists:</h3>
+        <ul>
+            <li><b>Dynamic Size:</b> No need to define the size in advance; can grow/shrink as needed.</li>
+            <li><b>Efficient Insertions/Deletions:</b> O(1) insertion and deletion at the head/tail without shifting elements.</li>
+            <li><b>Memory Utilization:</b> Uses only as much memory as required (no pre-allocation like arrays).</li>
+            <li><b>Flexibility:</b> Supports complex structures like stacks, queues, and graphs.</li>
+            <li><b>No Wasted Space:</b> No need for resizing or reallocation (unlike arrays that may require shifting).</li>
+        </ul>
+    
+        <h3>❌ Disadvantages of Linked Lists:</h3>
+        <ul>
+            <li><b>Extra Memory Overhead:</b> Each node requires extra space for pointers, increasing memory usage.</li>
+            <li><b>Sequential Access:</b> Cannot access elements directly by index (O(n) search time, unlike arrays).</li>
+            <li><b>Poor Cache Locality:</b> Nodes are scattered in memory, making traversal slower compared to arrays.</li>
+            <li><b>Complex Implementation:</b> Requires additional logic for pointer handling (insertion, deletion, traversal).</li>
+            <li><b>Slower Traversal:</b> Must follow pointers to reach elements, making it slower than arrays.</li>
+        </ul>
+    </section>
+    
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

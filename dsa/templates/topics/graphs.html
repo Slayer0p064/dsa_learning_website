@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Graphs in Data Structures</h1>
+        <p>A graph is a non-linear data structure consisting of nodes (vertices) and edges (connections between nodes). It is widely used to model real-world relationships.</p>
+    </header>
+
+    <section>
+        <h2>What is a Graph?</h2>
+        <p>A graph consists of a set of vertices (V) and edges (E). It can be represented as <b>G = (V, E)</b>.</p>
+
+        <h3>Types of Graphs</h3>
+        <ul>
+            <li><b>Directed Graph</b>: Edges have a specific direction.</li>
+            <li><b>Undirected Graph</b>: Edges have no direction.</li>
+            <li><b>Weighted Graph</b>: Edges have weights (values associated with connections).</li>
+            <li><b>Unweighted Graph</b>: Edges have no associated weights.</li>
+            <li><b>Cyclic Graph</b>: A graph containing at least one cycle.</li>
+            <li><b>Acyclic Graph</b>: A graph that does not contain any cycles.</li>
+        </ul>
+        <img src="/static/images/graphs.png" alt="Graph Representation">
+    </section>
+
+    <section>
+        <h2>Graph Representation</h2>
+        <ul>
+            <li><b>Adjacency Matrix</b>: A 2D matrix where <b>matrix[i][j]</b> represents an edge between nodes <b>i</b> and <b>j</b>.</li>
+            <li><b>Adjacency List</b>: A list where each node stores a list of connected nodes.</li>
+        </ul>
+
+        <h3>Python Example: Adjacency List</h3>
+        <pre><code>
+# Graph representation using adjacency list
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Graph Traversals</h2>
+        <p>Graph traversal refers to visiting all the nodes of a graph systematically.</p>
+
+        <h3>1. Depth-First Search (DFS)</h3>
+        <p>DFS explores as far as possible along each branch before backtracking.</p>
+        <pre><code>
+# DFS implementation using recursion
+def dfs(graph, node, visited):
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+        for neighbor in graph[node]:
+            dfs(graph, neighbor, visited)
+
+# Performing DFS traversal
+visited = set()
+dfs(graph, 'A', visited)  # Output: A B D E F C
+        </code></pre>
+
+        <h3>2. Breadth-First Search (BFS)</h3>
+        <p>BFS explores all neighbors at the current level before moving to the next level.</p>
+        <pre><code>
+from collections import deque
+
+# BFS implementation
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            queue.extend(graph[node])
+
+# Performing BFS traversal
+bfs(graph, 'A')  # Output: A B C D E F
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Graph Algorithms</h2>
+
+        <h3>1. Dijkstra's Algorithm (Shortest Path)</h3>
+        <p>Dijkstra's algorithm finds the shortest path from a single source node to all other nodes in a graph with non-negative edge weights.</p>
+        <ul>
+            <li><b>Time Complexity</b>: O((V + E) log V) using a priority queue.</li>
+            <li><b>Use Cases</b>: Google Maps, network routing, AI pathfinding.</li>
+        </ul>
+
+        <pre><code>
+import heapq
+
+def dijkstra(graph, start):
+    pq = [(0, start)]  # (cost, node)
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+
+    while pq:
+        current_dist, node = heapq.heappop(pq)
+
+        for neighbor, weight in graph[node]:
+            distance = current_dist + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+
+    return distances
+
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('C', 2), ('D', 5)],
+    'C': [('D', 1)],
+    'D': []
+}
+
+print(dijkstra(graph, 'A'))  # {'A': 0, 'B': 1, 'C': 3, 'D': 4}
+        </code></pre>
+
+        <h3>2. Bellman-Ford Algorithm (Handles Negative Weights)</h3>
+        <p>Unlike Dijkstra’s, Bellman-Ford works with negative weights and detects negative cycles.</p>
+        <ul>
+            <li><b>Time Complexity</b>: O(VE).</li>
+            <li><b>Use Cases</b>: Currency exchange arbitrage, finding shortest paths in graphs with negative weights.</li>
+        </ul>
+
+        <pre><code>
+def bellman_ford(graph, vertices, start):
+    distances = {v: float('inf') for v in vertices}
+    distances[start] = 0
+
+    for _ in range(len(vertices) - 1):
+        for u, v, w in graph:
+            if distances[u] + w < distances[v]:
+                distances[v] = distances[u] + w
+
+    # Check for negative cycles
+    for u, v, w in graph:
+        if distances[u] + w < distances[v]:
+            return "Graph contains a negative cycle"
+
+    return distances
+
+edges = [
+    ('A', 'B', 4),
+    ('A', 'C', 2),
+    ('B', 'C', 3),
+    ('B', 'D', 2),
+    ('C', 'D', 1),
+    ('D', 'B', -2)  # Negative weight
+]
+
+vertices = {'A', 'B', 'C', 'D'}
+print(bellman_ford(edges, vertices, 'A'))  
+        </code></pre>
+
+        <h3>3. Floyd-Warshall Algorithm (All-Pairs Shortest Path)</h3>
+        <p>Floyd-Warshall finds the shortest paths between all pairs of vertices.</p>
+        <ul>
+            <li><b>Time Complexity</b>: O(V³).</li>
+            <li><b>Use Cases</b>: Network routing, dynamic programming problems.</li>
+        </ul>
+
+        <pre><code>
+def floyd_warshall(graph, vertices):
+    dist = {v: {w: float('inf') for w in vertices} for v in vertices}
+
+    for v in vertices:
+        dist[v][v] = 0
+
+    for u, v, w in graph:
+        dist[u][v] = w
+
+    for k in vertices:
+        for i in vertices:
+            for j in vertices:
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+
+    return dist
+
+edges = [
+    ('A', 'B', 3),
+    ('A', 'C', 7),
+    ('B', 'C', 1),
+    ('B', 'D', 5),
+    ('C', 'D', 2)
+]
+
+vertices = {'A', 'B', 'C', 'D'}
+print(floyd_warshall(edges, vertices))  
+        </code></pre>
+
+        <h3>4. Kruskal’s Algorithm (Minimum Spanning Tree - MST)</h3>
+        <p>Kruskal's algorithm finds the MST using a greedy approach by sorting edges and using the Union-Find data structure.</p>
+        <ul>
+            <li><b>Time Complexity</b>: O(E log E).</li>
+            <li><b>Use Cases</b>: Network design, clustering algorithms.</li>
+        </ul>
+
+        <pre><code>
+class UnionFind:
+    def __init__(self, n):
+        self.parent = {i: i for i in range(n)}
+
+    def find(self, node):
+        if self.parent[node] != node:
+            self.parent[node] = self.find(self.parent[node])
+        return self.parent[node]
+
+    def union(self, u, v):
+        root1 = self.find(u)
+        root2 = self.find(v)
+        if root1 != root2:
+            self.parent[root2] = root1
+
+def kruskal(edges, n):
+    edges.sort(key=lambda x: x[2])  # Sort by weight
+    uf = UnionFind(n)
+    mst = []
+    
+    for u, v, w in edges:
+        if uf.find(u) != uf.find(v):
+            uf.union(u, v)
+            mst.append((u, v, w))
+
+    return mst
+
+edges = [(0, 1, 10), (0, 2, 6), (0, 3, 5), (1, 3, 15), (2, 3, 4)]
+print(kruskal(edges, 4))
+        </code></pre>
+
+        <h3>5. Prim’s Algorithm (Minimum Spanning Tree - MST)</h3>
+        <p>Prim’s algorithm grows an MST by selecting the minimum-weight edge that expands the tree.</p>
+        <ul>
+            <li><b>Time Complexity</b>: O(E log V).</li>
+            <li><b>Use Cases</b>: Network routing, laying out electrical circuits.</li>
+        </ul>
+
+        <pre><code>
+import heapq
+
+def prim(graph, start):
+    mst = []
+    visited = set()
+    min_heap = [(0, start, None)]  # (cost, node, parent)
+
+    while min_heap:
+        cost, node, parent = heapq.heappop(min_heap)
+        if node not in visited:
+            visited.add(node)
+            if parent is not None:
+                mst.append((parent, node, cost))
+            
+            for neighbor, weight in graph[node]:
+                if neighbor not in visited:
+                    heapq.heappush(min_heap, (weight, neighbor, node))
+
+    return mst
+
+graph = {
+    'A': [('B', 2), ('C', 3)],
+    'B': [('A', 2), ('C', 1), ('D', 4)],
+    'C': [('A', 3), ('B', 1), ('D', 5)],
+    'D': [('B', 4), ('C', 5)]
+}
+
+print(prim(graph, 'A'))
+        </code></pre>
+
+    </section>
+
+
+    <section>
+        <h2>Applications of Graphs</h2>
+        <ul>
+            <li><b>Social Networks</b>: Facebook, Twitter (connections between users).</li>
+            <li><b>Google Maps</b>: Finding shortest routes.</li>
+            <li><b>Computer Networks</b>: Routing and data transmission.</li>
+            <li><b>Web Crawling</b>: Crawling links between web pages.</li>
+            <li><b>Biology</b>: Analyzing molecular structures and DNA sequencing.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Advantages and Disadvantages</h2>
+
+        <h3>Advantages:</h3>
+        <ul>
+            <li><b>Efficient for complex relationships</b> like social networks and navigation.</li>
+            <li><b>Flexible</b> representation for different real-world problems.</li>
+        </ul>
+
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li><b>High memory usage</b> for dense graphs (Adjacency Matrix uses O(V²) space).</li>
+            <li><b>Can be slow</b> for very large graphs with inefficient traversal.</li>
+        </ul>
+    </section>
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

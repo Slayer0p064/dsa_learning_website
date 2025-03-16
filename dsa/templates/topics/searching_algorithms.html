@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searching Algorithms in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>🔍 Searching Algorithms in Data Structures</h1>
+        <p>Searching algorithms are used to find an element in a dataset efficiently.</p>
+    </header>
+
+    <section id="introduction">
+        <h2>📌 What are Searching Algorithms?</h2>
+        <p>
+            Searching algorithms are fundamental techniques used to find specific elements within a 
+            <strong>list, array, tree, or graph</strong>. They are crucial in 
+            <strong>data retrieval, database indexing, artificial intelligence, and real-time systems</strong>.
+            Efficient searching is necessary for optimizing computational tasks and reducing execution time.
+        </p>
+    
+        <h3>🔎 Why Are Searching Algorithms Important?</h3>
+        <ul>
+            <li>🔹 <strong>Data Retrieval:</strong> Used in databases, search engines, and data structures.</li>
+            <li>🔹 <strong>Artificial Intelligence:</strong> Searching plays a key role in decision-making algorithms.</li>
+            <li>🔹 <strong>File Management Systems:</strong> Helps in locating files in operating systems.</li>
+            <li>🔹 <strong>Cybersecurity:</strong> Pattern searching is used for malware detection.</li>
+            <li>🔹 <strong>Navigation & GPS:</strong> Used in shortest path algorithms.</li>
+        </ul>
+    
+        <h3>🛠️ Types of Searching Algorithms:</h3>
+        <ul>
+            <li><strong>🔹 Linear Search:</strong> Sequentially checks each element (Best for small or unsorted datasets).</li>
+            <li><strong>🔹 Binary Search:</strong> Efficient for sorted lists (Divides search space into halves).</li>
+            <li><strong>🔹 Jump Search:</strong> Skips fixed steps for faster searching (Useful for large sorted datasets).</li>
+            <li><strong>🔹 Interpolation Search:</strong> Improves Binary Search by estimating position (Works well for uniformly distributed data).</li>
+            <li><strong>🔹 Exponential Search:</strong> Efficient for <strong>unbounded arrays</strong> (Expands search range exponentially).</li>
+        </ul>
+    
+        <h3>📊 Real-World Applications:</h3>
+        <ul>
+            <li>🌍 <strong>Search Engines:</strong> Google and Bing use advanced searching algorithms for ranking pages.</li>
+            <li>📂 <strong>File Systems:</strong> Searching helps locate files in directories.</li>
+            <li>🔬 <strong>Bioinformatics:</strong> DNA sequence searching relies on pattern matching algorithms.</li>
+            <li>🚀 <strong>AI & Robotics:</strong> Decision-making algorithms depend on efficient searching.</li>
+            <li>📡 <strong>Networking:</strong> Routing algorithms search for optimal data paths.</li>
+        </ul>
+    
+        <p>Understanding searching algorithms is essential for optimizing performance in computational systems, making them an integral part of <strong>Data Structures and Algorithms (DSA)</strong>.</p>
+        
+        <img src="/static/images/searching.png" alt="Searching Algorithms Representation">
+    </section>
+    
+
+    <section id="comparison">
+        <h2>⚡ Searching Algorithms Comparison</h2>
+            <table border="1"   >
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Best Case</th>
+                    <th>Average Case</th>
+                    <th>Worst Case</th>
+                    <th>Works On</th>
+                    <th>Advantages</th>
+                    <th>Disadvantages</th>
+                </tr>
+                <tr>
+                    <td><strong>Linear Search</strong></td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>Unsorted/Sparse Data</td>
+                    <td>Simple to implement, works on unsorted data.</td>
+                    <td>Inefficient for large datasets, linear time complexity.</td>
+                </tr>
+                <tr>
+                    <td><strong>Binary Search</strong></td>
+                    <td>O(1)</td>
+                    <td>O(log n)</td>
+                    <td>O(log n)</td>
+                    <td>Sorted Data</td>
+                    <td>Fast for sorted data, logarithmic time complexity.</td>
+                    <td>Requires data to be sorted, not suitable for unsorted data.</td>
+                </tr>
+                <tr>
+                    <td><strong>Jump Search</strong></td>
+                    <td>O(1)</td>
+                    <td>O(√n)</td>
+                    <td>O(√n)</td>
+                    <td>Sorted Data</td>
+                    <td>Better than linear search in sorted data, sub-linear time complexity.</td>
+                    <td>Not suitable for unsorted data, requires jumping step optimization.</td>
+                </tr>
+                <tr>
+                    <td><strong>Interpolation Search</strong></td>
+                    <td>O(1)</td>
+                    <td>O(log log n)</td>
+                    <td>O(n)</td>
+                    <td>Uniformly Distributed Data</td>
+                    <td>Very efficient for uniformly distributed data, better than binary search in some cases.</td>
+                    <td>Inefficient for skewed distributions or non-uniform data.</td>
+                </tr>
+                <tr>
+                    <td><strong>Exponential Search</strong></td>
+                    <td>O(1)</td>
+                    <td>O(log n)</td>
+                    <td>O(log n)</td>
+                    <td>Unbounded Sorted Data</td>
+                    <td>Efficient for large datasets with unbounded sizes.</td>
+                    <td>Requires sorted data, not useful for bounded datasets.</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    
+    
+
+    <section id="python-examples">
+        <h2>🐍 Python Code Examples</h2>
+    
+        <h3>1️⃣ Linear Search (Iterative)</h3>
+        <pre><code>
+    # Linear Search Algorithm (Iterative approach)
+    def linear_search(arr, target):
+        for i in range(len(arr)):  # Traverse through the entire list
+            if arr[i] == target:  # Check if the element matches the target
+                return i  # Return the index of the target
+        return -1  # Return -1 if target is not found
+    
+    # Example usage
+    arr = [10, 23, 45, 70, 11, 15]
+    print(linear_search(arr, 70))  # Output: 3 (index of 70 in the array)
+        </code></pre>
+    
+        <h3>2️⃣ Binary Search (Iterative)</h3>
+        <pre><code>
+    # Binary Search Algorithm (Iterative approach)
+    def binary_search(arr, target):
+        left, right = 0, len(arr) - 1  # Initialize the search range
+        while left <= right:
+            mid = (left + right) // 2  # Find the middle element
+            if arr[mid] == target:  # Check if the middle element is the target
+                return mid  # Return the index of the target
+            elif arr[mid] < target:  # If target is greater, ignore the left half
+                left = mid + 1
+            else:  # If target is smaller, ignore the right half
+                right = mid - 1
+        return -1  # Return -1 if the target is not found
+    
+    # Example usage
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    print(binary_search(arr, 5))  # Output: 4 (index of 5 in the array)
+        </code></pre>
+    
+        <h3>3️⃣ Jump Search</h3>
+        <pre><code>
+    import math
+    
+    # Jump Search Algorithm
+    def jump_search(arr, target):
+        n = len(arr)  # Length of the array
+        step = int(math.sqrt(n))  # Optimal step size (square root of the length)
+        prev = 0  # Initial previous index
+    
+        # Jump in steps of 'step' until target might be in the current block
+        while arr[min(step, n) - 1] < target:
+            prev = step  # Update previous index
+            step += int(math.sqrt(n))  # Increase the step size
+            if prev >= n:  # If we reached the end of the array
+                return -1  # Target is not found
+    
+        # Linear search within the current block
+        for i in range(prev, min(step, n)):
+            if arr[i] == target:
+                return i  # Return index if found
+        return -1  # Return -1 if target is not found
+    
+    # Example usage
+    arr = [1, 3, 5, 7, 9, 11, 13, 15]
+    print(jump_search(arr, 9))  # Output: 4 (index of 9 in the array)
+        </code></pre>
+    </section>
+    
+
+    <section id="advantages-disadvantages">
+        <h2>✅ Advantages & ❌ Disadvantages</h2>
+    
+        <h3>✅ Advantages of Searching Algorithms:</h3>
+        <ul>
+            <li><strong>Efficient retrieval:</strong> Searching algorithms, especially for sorted data, help quickly locate elements in large datasets.</li>
+            <li><strong>Optimized for large data:</strong> Algorithms like Binary Search have logarithmic time complexity (O(log n)), making them suitable for searching in large datasets.</li>
+            <li><strong>Used in AI & Databases:</strong> Searching is essential in many domains such as AI, where algorithms are used to find patterns, and in databases for efficient indexing and retrieval.</li>
+            <li><strong>Improved performance with advanced algorithms:</strong> Techniques like Jump Search and Exponential Search reduce time complexity compared to brute force algorithms like Linear Search.</li>
+            <li><strong>Less space complexity:</strong> Many searching algorithms, such as Binary Search, require only a small amount of additional space, making them efficient in terms of memory usage.</li>
+        </ul>
+    
+        <h3>❌ Disadvantages of Searching Algorithms:</h3>
+        <ul>
+            <li><strong>Binary Search requires sorted data:</strong> While efficient, Binary Search only works on sorted datasets. Sorting the data initially can take additional time (O(n log n)), which may be costly for large datasets.</li>
+            <li><strong>Linear Search is inefficient:</strong> Linear Search has a time complexity of O(n) in the worst case, which makes it impractical for large datasets where other algorithms like Binary Search or Jump Search can perform much better.</li>
+            <li><strong>Complexity in advanced searches:</strong> Algorithms like Interpolation Search and Exponential Search have specific requirements, such as uniform or unbounded data distributions. If the data doesn't meet these conditions, the performance can degrade or even fail.</li>
+            <li><strong>Jump Search is not ideal for small datasets:</strong> Jump Search, although faster than Linear Search for large datasets, requires extra computation to determine the optimal step size and may not be efficient for small datasets.</li>
+            <li><strong>Interpolation Search has limited use cases:</strong> This algorithm performs best on uniformly distributed data. For skewed or irregular data, its performance can be much worse than Binary Search.</li>
+        </ul>
+    </section>
+    
+
+    <section id="real-world-applications">
+        <h2>🌍 Real-World Applications of Searching Algorithms</h2>
+        <ul>
+            <li><strong>🔎 Search Engines:</strong> Search algorithms are the backbone of search engines like Google, Bing, and Yahoo. They use advanced indexing and ranking algorithms to efficiently search vast amounts of data and provide relevant search results to users.</li>
+            <li><strong>📂 File Searching:</strong> Operating systems (like Windows, macOS, Linux) and databases use searching algorithms to locate files, documents, and records. File indexing and querying are optimized through algorithms like Binary Search or hashing to quickly retrieve files based on various attributes.</li>
+            <li><strong>📡 Networking:</strong> Searching algorithms are crucial in routing algorithms (e.g., Dijkstra's algorithm) to find the shortest path in networks. These algorithms help ensure efficient data transmission by determining the quickest route in communication networks like the internet or cellular networks.</li>
+            <li><strong>🎮 AI & Games:</strong> In video games, searching algorithms are often used for decision-making, pathfinding (e.g., A* algorithm), and AI-driven behaviors. These algorithms help AI agents navigate environments, make strategic decisions, and solve puzzles, making games more interactive and realistic.</li>
+            <li><strong>📊 Data Mining:</strong> Searching algorithms are fundamental in data mining techniques, such as clustering, classification, and pattern recognition. These algorithms help analyze large datasets by identifying patterns, correlations, and anomalies that can drive business intelligence, market analysis, and scientific research.</li>
+            <li><strong>🏦 Financial Systems:</strong> Searching algorithms are used in financial systems to search for trends, anomalies, and fraud detection in transaction data. For example, algorithms like Binary Search or Hashing are used in high-frequency trading to identify potential patterns in stock prices in real-time.</li>
+            <li><strong>🛍️ E-Commerce:</strong> Online stores and marketplaces use search algorithms to find products based on customer queries. Product search engines, recommendation systems, and filtering mechanisms employ searching algorithms to help users find products efficiently.</li>
+        </ul>
+    </section>
+    
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>🚀 Keep Learning & Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

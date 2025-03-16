@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trees in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Trees in Data Structures</h1>
+        <p>A tree is a hierarchical data structure consisting of nodes connected by edges. It is commonly used for representing data that has a hierarchical relationship, such as organizational structures, file systems, or decision trees.</p>
+    </header>
+
+    <section>
+        <h2>What is a Tree?</h2>
+        <p>A tree is a hierarchical data structure consisting of nodes connected by edges, with a root node at the top. Nodes connected to the root are called children, forming a parent-child relationship. Trees are commonly used to model hierarchical relationships in various applications like organizational charts and file systems.</p>
+        
+        <h3>Types of Trees:</h3>
+        <ul>
+            <li><b>Binary Tree:</b> A tree with at most two children per node.</li>
+            <li><b>Binary Search Tree (BST):</b> A binary tree where each left child is smaller and the right child is greater than the parent node, enabling efficient searching.</li>
+            <li><b>AVL Tree:</b> A self-balancing binary search tree maintaining a balance between subtrees for optimized operations.</li>
+            <li><b>Red-Black Tree:</b> A balanced binary search tree using color properties to ensure efficient performance for search, insertion, and deletion.</li>
+            <li><b>Heap:</b> A complete binary tree where the parent node holds either the maximum or minimum value, useful in priority queues.</li>
+        </ul>
+        
+        <h3>Applications of Trees:</h3>
+        <ul>
+            <li><strong>File Systems:</strong> Represent hierarchical directory structures.</li>
+            <li><strong>Databases:</strong> Used for efficient data indexing.</li>
+            <li><strong>Artificial Intelligence:</strong> Employed in decision trees for classification tasks.</li>
+            <li><strong>Network Routing:</strong> Used to determine optimal data paths in networks.</li>
+        </ul>
+    </section>
+    
+    
+
+    <section>
+        <h2>Tree Traversals</h2>
+        <p>Tree traversal is the process of visiting all the nodes in a tree. There are different ways to traverse a tree based on the order of visiting nodes:</p>
+        <ol>
+            <li><b>In-order Traversal:</b> Visit the left subtree, the root node, then the right subtree. This traversal is mainly used for binary search trees as it visits nodes in sorted order.</li>
+            <li><b>Pre-order Traversal:</b> Visit the root node, then the left subtree, followed by the right subtree. This is useful for creating a copy of the tree.</li>
+            <li><b>Post-order Traversal:</b> Visit the left subtree, the right subtree, then the root node. This is useful for deleting a tree or evaluating postfix expressions.</li>
+            <li><b>Level-order Traversal:</b> Also known as breadth-first traversal. It visits nodes level by level, starting from the root.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Python Code Examples</h2>
+        <p>Here’s an example of a simple implementation of a binary tree and an in-order traversal in Python:</p>
+        <pre><code>
+# Binary Tree Node
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+# In-order Traversal
+def in_order(root):
+    if root:
+        in_order(root.left)
+        print(root.data)
+        in_order(root.right)
+
+# Example usage:
+root = Node(10)
+root.left = Node(5)
+root.right = Node(15)
+root.left.left = Node(3)
+
+in_order(root)  # Output: 3 5 10 15
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Advanced Tree Operations</h2>
+        <p>In addition to traversals, several important operations can be performed on trees:</p>
+        <ul>
+            <li><b>Insertion:</b> Inserting a new node into a tree (e.g., maintaining the binary search tree property when inserting).</li>
+            <li><b>Deletion:</b> Removing a node from the tree while maintaining the structure (especially in binary search trees).</li>
+            <li><b>Searching:</b> Searching for a value or node in the tree (e.g., searching for a value in a binary search tree).</li>
+            <li><b>Balancing:</b> In self-balancing trees like AVL or Red-Black trees, rotations are used to keep the tree balanced and maintain efficient operations.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Advantages & Disadvantages</h2>
+        <h3>✅ Advantages:</h3>
+        <ul>
+            <li>Efficient for hierarchical data representation, such as file systems and decision trees.</li>
+            <li>Enables fast searching, insertion, and deletion, especially in binary search trees and balanced trees like AVL and Red-Black trees.</li>
+            <li>Useful for implementing priority queues (using heaps) and other specialized data structures.</li>
+        </ul>
+        <h3>❌ Disadvantages:</h3>
+        <ul>
+            <li>Complex implementation, especially for self-balancing trees and advanced operations like rotations.</li>
+            <li>Can be inefficient in terms of memory usage for large, sparse trees.</li>
+            <li>Requires careful balancing to maintain performance in operations like insertion and deletion (for AVL or Red-Black trees).</li>
+        </ul>
+    </section>
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>

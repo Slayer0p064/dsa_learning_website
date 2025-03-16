@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Programming in DSA</title>
+    <link rel="stylesheet" href="/static/dsa/common.css">
+</head>
+<body>
+    <header>
+        <h1>Dynamic Programming in Data Structures</h1>
+        <p><b>Dynamic Programming (DP)</b> is a powerful algorithmic technique used to solve problems efficiently by breaking them into overlapping subproblems and storing their results.</p>
+    </header>
+
+    <section>
+        <h2>What is Dynamic Programming?</h2>
+        <p><b>Dynamic Programming (DP)</b> is a method used in computer science to solve complex problems by breaking them down into simpler subproblems. Unlike naive recursion, which recalculates the same results multiple times, DP stores intermediate results to improve efficiency.</p>
+        
+        <h3>Two Key Approaches:</h3>
+        <ul>
+            <li><b>Memoization (Top-Down Approach)</b>: Uses recursion with a cache to store previously computed results.</li>
+            <li><b>Tabulation (Bottom-Up Approach)</b>: Uses an iterative approach by solving all subproblems first and building up to the final solution.</li>
+        </ul>
+
+        <img src="/static/images/dp.png" alt="Dynamic Programming Representation">
+    </section>
+
+    <section>
+        <h2>Common Dynamic Programming Problems</h2>
+        <ol>
+            <li><b>Fibonacci Sequence</b> - Classic example demonstrating memoization and tabulation.</li>
+            <li><b>Knapsack Problem</b> - Optimization problem commonly used in resource allocation.</li>
+            <li><b>Longest Common Subsequence (LCS)</b> - Finding the longest sequence present in two strings.</li>
+            <li><b>Coin Change Problem</b> - Finding the minimum number of coins needed for a given amount.</li>
+            <li><b>Longest Increasing Subsequence (LIS)</b> - Finding the longest increasing subsequence in an array.</li>
+            <li><b>Matrix Chain Multiplication</b> - Optimizing the multiplication order of matrices.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Python Code Examples</h2>
+
+        <h3>1. Fibonacci Sequence using Memoization</h3>
+        <pre><code>
+# Fibonacci using DP (Memoization - Top-Down)
+def fibonacci(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 2:
+        return 1
+    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+    return memo[n]
+
+print(fibonacci(10))  # Output: 55
+        </code></pre>
+
+        <h3>2. Fibonacci Sequence using Tabulation</h3>
+        <pre><code>
+# Fibonacci using DP (Tabulation - Bottom-Up)
+def fibonacci_tabulation(n):
+    if n <= 2:
+        return 1
+    dp = [0] * (n + 1)
+    dp[1], dp[2] = 1, 1
+    for i in range(3, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+print(fibonacci_tabulation(10))  # Output: 55
+        </code></pre>
+
+        <h3>3. Coin Change Problem</h3>
+        <pre><code>
+# Coin Change Problem (Minimum Coins)
+def coin_change(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0  # Base case: 0 coins for amount 0
+    for coin in coins:
+        for i in range(coin, amount + 1):
+            dp[i] = min(dp[i], dp[i - coin] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+print(coin_change([1, 2, 5], 11))  # Output: 3 (5+5+1)
+        </code></pre>
+
+        <h3>4. Longest Common Subsequence (LCS)</h3>
+        <pre><code>
+# Longest Common Subsequence (LCS)
+def lcs(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = 1 + dp[i - 1][j - 1]
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    
+    return dp[m][n]
+
+print(lcs("abcde", "ace"))  # Output: 3 (ace)
+        </code></pre>
+
+    </section>
+
+    <section>
+        <h2>Applications of Dynamic Programming</h2>
+        <ul>
+            <li><b>Optimizing robotic movements</b> (shortest path calculations).</li>
+            <li><b>Used in bioinformatics</b> (DNA sequence alignment).</li>
+            <li><b>Improves game AI</b> (min-max algorithms with DP).</li>
+            <li><b>Optimizes route planning in maps</b> (shortest path algorithms).</li>
+            <li><b>Used in text processing</b> (spell correction and text prediction).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Advantages and Disadvantages</h2>
+
+        <h3>Advantages:</h3>
+        <ul>
+            <li><b>Efficient</b> for problems with overlapping subproblems.</li>
+            <li><b>Reduces time complexity</b> significantly compared to brute force recursion.</li>
+            <li><b>Widely used</b> in optimization and AI-related applications.</li>
+        </ul>
+
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li><b>High memory usage</b> for large problems (especially with recursion-based memoization).</li>
+            <li><b>Can be challenging</b> to implement and debug.</li>
+        </ul>
+    </section>
+
+    <div class="center-button">
+        <a href="/">🔙 Back to Home</a>
+    </div>
+
+    <footer>
+        <p>Happy Coding! 💻</p>
+    </footer>
+</body>
+</html>
