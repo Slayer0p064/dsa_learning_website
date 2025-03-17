@@ -186,6 +186,7 @@ tzdata==2023.3
 uritemplate==4.1.1
 urllib3==2.2.3
 uvicorn==0.34.0
+wheel==0.45.1
 w3lib==2.2.1
 weasyprint==64.1
 webencodings==0.5.1
