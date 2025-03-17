@@ -1,0 +1,211 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    background-color: #fff5f7; /* Light Pink Background */
+    color: #2d3748; /* Dark Gray Text */
+}
+
+header {
+    background: linear-gradient(135deg, #f687b3, #b794f4); /* Soft Pink to Lavender Gradient */
+    color: #fff;
+    padding: 3rem 1rem;
+    text-align: center;
+    border-bottom: 5px solid #f687b3; /* Soft Pink Border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+header p {
+    font-size: 1.25rem;
+    margin: 0.5rem 0 0;
+    opacity: 0.9;
+}
+
+section {
+    background: #fff;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    color: #f687b3; /* Soft Pink */
+    font-size: 2.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #f687b3; /* Soft Pink Border */
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+h3 {
+    color: #68d391; /* Mint Green */
+    font-size: 1.75rem;
+    margin-top: 2rem;
+    font-weight: 600;
+}
+
+ul, ol {
+    padding-left: 2rem;
+}
+
+li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+}
+
+table th {
+    background-color: #f687b3; /* Soft Pink */
+    color: #fff;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background-color: #f7fafc;
+}
+
+table tr:hover {
+    background-color: #f0fff4; /* Mint Green Highlight */
+}
+
+pre {
+    background: #2d3748; /* Dark Gray */
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    border: 1px solid #4a5568;
+    color: #cbd5e0; /* Light Gray Text */
+    line-height: 1.5;
+}
+
+code {
+    color: #81e6d9; /* Teal for Code */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    display: inline-block;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.5rem;
+    background: #b794f4; /* Lavender */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    font-weight: 600;
+}
+
+a:hover {
+    background: #f687b3; /* Soft Pink */
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: #2d3748; /* Dark Gray */
+    color: #fff;
+    margin-top: 3rem;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Center Button Styles */
+.center-button {
+    text-align: center;
+    margin: 2.5rem 0;
+}
+
+.center-button a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #b794f4; /* Lavender */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    font-weight: 600;
+}
+
+.center-button a:hover {
+    background: #f687b3; /* Soft Pink */
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.25rem;
+    }
+
+    header p {
+        font-size: 1.1rem;
+    }
+
+    section {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    pre {
+        font-size: 0.85rem;
+        padding: 1rem;
+    }
+}
