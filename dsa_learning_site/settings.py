@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -116,7 +117,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# Static files (CSS, JavaScript, images)
+STATIC_URL = '/static/'
+
+# Directory where static files will be collected
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Static files directories (optional if you have custom paths)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Where your static files are during development
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
